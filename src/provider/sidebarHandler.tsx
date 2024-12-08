@@ -1,7 +1,7 @@
-"use client"
-import { usePathname } from "next/navigation"
-import { Sidebar } from "../components/common/Sidebar"
-import { matcher } from "@/router/matcher"
+'use client'
+import { usePathname } from 'next/navigation'
+import { Sidebar } from '../components/common/Sidebar'
+import { config } from '@/middleware'
 
 export default function SidebarHandler({
   children,
@@ -10,7 +10,10 @@ export default function SidebarHandler({
 }) {
   const pathname = usePathname()
 
-  const isProtected = matcher.some((route) => pathname.startsWith(route))
+  const isProtected = config.matcher.some(
+    (route) =>
+      pathname.startsWith(route) && !pathname.startsWith('/create-products')
+  )
 
   return (
     <>

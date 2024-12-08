@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie"
 import { auth, logout } from "./api"
 export const useAuth = () => {
   const { toast } = useToast()
-  const [_, setCookie] = useCookies(["auth"])
+  const [, setCookie] = useCookies(["auth"])
   const router = useRouter()
 
   return useMutation({
@@ -33,7 +33,7 @@ export const useAuth = () => {
 export const useLogout = () => {
   const { toast } = useToast()
   const queryClient = useQueryClient()
-  const [__, setCookie] = useCookies(["auth"])
+  const [, setCookie] = useCookies(["auth"])
   const router = useRouter()
 
   return useMutation({

@@ -1,7 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createCategorie, deleteCategorie, updateCategorie } from "./api"
-import { useToast } from "@/hooks/use-toast"
-import { AxiosError } from "axios"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  createCategorie,
+  createCategorieDiscount,
+  deleteCategorie,
+  updateCategorie,
+  updateCategorieDiscount,
+} from './api'
+import { useToast } from '@/hooks/use-toast'
+import { AxiosError } from 'axios'
 
 export const useCreateCategorie = () => {
   const { toast } = useToast()
@@ -9,27 +15,27 @@ export const useCreateCategorie = () => {
   return useMutation({
     // retry: 1,
     // gcTime: 0,
-    mutationKey: ["createCategorie"],
+    mutationKey: ['createCategorie'],
     mutationFn: createCategorie,
     onError(error) {
       if (error instanceof AxiosError) {
         toast({
           title: `${error.response?.data.message}`,
-          "aria-activedescendant": error.message,
-          className: "bg-gradient-to-t from-orange-100 to-orange-100",
+          'aria-activedescendant': error.message,
+          className: 'bg-gradient-to-t from-orange-100 to-orange-100',
         })
       }
     },
     async onSuccess(data) {
       await queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: ['categories'],
       })
       toast({
         title: `${data.message}`,
         description: `Category has been created.`,
-        variant: "default",
+        variant: 'default',
         className:
-          "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200",
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
       })
     },
   })
@@ -40,27 +46,27 @@ export const useDeleteCategorie = () => {
   return useMutation({
     // retry: 3,
     // retryDelay: 2000,
-    mutationKey: ["deleteCategorie"],
+    mutationKey: ['deleteCategorie'],
     mutationFn: deleteCategorie,
     onError(error) {
       if (error instanceof AxiosError) {
         toast({
           title: `${error.response?.data.message}`,
-          "aria-activedescendant": error.message,
-          className: "bg-gradient-to-t from-orange-100 to-orange-100",
+          'aria-activedescendant': error.message,
+          className: 'bg-gradient-to-t from-orange-100 to-orange-100',
         })
       }
     },
     async onSuccess(data) {
       await queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: ['categories'],
       })
       toast({
         title: `${data.message}`,
         description: `Category has been created.`,
-        variant: "default",
+        variant: 'default',
         className:
-          "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200",
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
       })
     },
   })
@@ -71,27 +77,84 @@ export const useUpdateCategorie = () => {
   return useMutation({
     // retry: 3,
     // retryDelay: 2000,
-    mutationKey: ["updateCategorie"],
+    mutationKey: ['updateCategorie'],
     mutationFn: updateCategorie,
     onError(error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError)
         toast({
           title: `${error.response?.data.message}`,
-          "aria-activedescendant": error.message,
-          className: "bg-gradient-to-t from-orange-100 to-orange-100",
+          'aria-activedescendant': error.message,
+          className: 'bg-gradient-to-t from-orange-100 to-orange-100',
         })
-      }
     },
     async onSuccess(data) {
       await queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: ['categories'],
       })
       toast({
         title: `${data.message}`,
         description: `Category has been created.`,
-        variant: "default",
+        variant: 'default',
         className:
-          "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200",
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
+      })
+    },
+  })
+}
+
+export const useCreateCategorieDiscount = () => {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['create-categorie-discount'],
+    mutationFn: createCategorieDiscount,
+    onError(error) {
+      if (error instanceof AxiosError)
+        toast({
+          title: `${error.response?.data.message}`,
+          'aria-activedescendant': error.message,
+          className: 'bg-gradient-to-t from-orange-100 to-orange-100',
+        })
+    },
+    async onSuccess(data) {
+      await queryClient.invalidateQueries({
+        queryKey: ['categories'],
+      })
+      toast({
+        title: `${data.message}`,
+        description: `Category discount has been created.`,
+        variant: 'default',
+        className:
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
+      })
+    },
+  })
+}
+
+export const useUpdateCategorieDiscount = () => {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['update-categorie-discount'],
+    mutationFn: updateCategorieDiscount,
+    onError(error) {
+      if (error instanceof AxiosError)
+        toast({
+          title: `${error.response?.data.message}`,
+          'aria-activedescendant': error.message,
+          className: 'bg-gradient-to-t from-orange-100 to-orange-100',
+        })
+    },
+    async onSuccess(data) {
+      await queryClient.invalidateQueries({
+        queryKey: ['categories'],
+      })
+      toast({
+        title: `${data.message}`,
+        description: `Category discount has been updated.`,
+        variant: 'default',
+        className:
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
       })
     },
   })

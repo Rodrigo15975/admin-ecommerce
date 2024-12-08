@@ -1,5 +1,5 @@
-import { useMethods } from "@/adapters/methods"
-import { PathServices } from "@/pathServices/pathServices"
+import { useMethods } from '@/adapters/methods'
+import { PathServices } from '@/pathServices/pathServices'
 
 export const getAllCategories = async () =>
   await useMethods.GET<Categories[]>(PathServices.CATEGORIES)
@@ -15,5 +15,18 @@ export const updateCategorie = async (data: UpdateCategorie) =>
     `${PathServices.CATEGORIES}/${data.id}`,
     data
   )
+
 export const deleteCategorie = async (id: number) =>
   await useMethods.DELETE<HttpResponse>(`${PathServices.CATEGORIES}/${id}`)
+
+export const createCategorieDiscount = async (data: CreateDiscountCategory) =>
+  await useMethods.POST<HttpResponse, CreateDiscountCategory>(
+    `${PathServices.CATEGORIESDISCOUNT}/${data.categoryId}`,
+    data
+  )
+
+export const updateCategorieDiscount = async (data: CreateDiscountCategory) =>
+  await useMethods.PATCH<HttpResponse, CreateDiscountCategory>(
+    `${PathServices.CATEGORIESDISCOUNT}/${data.id}`,
+    data
+  )

@@ -1,14 +1,11 @@
 import { useMethods } from "@/adapters/methods"
 import { PathServices } from "@/pathServices/pathServices"
 
-export const auth = async (data: Login) => {
-  console.log(data)
-
-  return await useMethods.POST<HttpResponse & Cookies, Login>(
+export const auth = async (data: Login) =>
+  await useMethods.POST<HttpResponse & Cookies, Login>(
     `${PathServices.URL}${PathServices.AUTH}`,
     data
   )
-}
 
 export const verifyToken = async (token: string | undefined) => {
   try {

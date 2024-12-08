@@ -27,7 +27,7 @@ const Form = () => {
         <div className="flex justify-between max-sm:flex-wrap gap-3">
           <Dialog open={isOpenDialogForm} onOpenChange={handleClose}>
             <DialogTrigger className="flex p-4 items-center h-10 gap-2  justify-center bg-primary shadow-lg rounded text-white flex-[0_1_15rem] max-sm:flex-1">
-              Create
+              Create Category
             </DialogTrigger>
             <Create form={form} handleDialogClose={handleClose} />
           </Dialog>

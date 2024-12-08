@@ -1,14 +1,9 @@
-// src/modules/dashboard/Dashboard.tsx
-// import Loading from "@/components/common/loading"
-// import React, { Suspense } from "react"
-
 import { DashboardPage } from "@/modules/dashboard/pages/DashboardPage"
 
-// // Carga diferida del componente de DashboardPage
-// const DashboardPag = React.lazy(
-//   () => import("@/dashboard/pages/DashboardPage/DashboardPage")
-// )
+import React from "react"
 
-const Dashboard = () => <DashboardPage />
+const Dashboard = () => {
+  return <DashboardPage />
+}
 
 export default Dashboard

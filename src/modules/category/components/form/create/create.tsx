@@ -1,34 +1,34 @@
-"use client"
-import { Button } from "@/components/ui/button"
+'use client'
+import { Button } from '@/components/ui/button'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { storeEditCategorie } from "@/modules/category/store/storeEditCategorie"
-import { formInputCategorie } from "@/modules/category/utils/formSchema"
-import { useEffect } from "react"
-import { UseFormReturn } from "react-hook-form"
-import { initialValues } from "./initialValues"
-import { useGetAllCategorys } from "@/modules/category/services/queries"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { storeEditCategorie } from '@/modules/category/store/storeEditCategorie'
+import { formInputCategorie } from '@/modules/category/utils/formSchema'
+import { useEffect } from 'react'
+import { UseFormReturn } from 'react-hook-form'
+import { initialValues } from './initialValues'
+import { useGetAllCategorys } from '@/modules/category/services/queries'
 import {
   useCreateCategorie,
   useUpdateCategorie,
-} from "@/modules/category/services/mutation"
-import { AiOutlineLoading } from "react-icons/ai"
+} from '@/modules/category/services/mutation'
+import { AiOutlineLoading } from 'react-icons/ai'
 
 type Props = {
-  form: UseFormReturn<CreateCategorie, any, undefined>
+  form: UseFormReturn<CreateCategorie, unknown, undefined>
   handleDialogClose: () => void
 }
 
@@ -45,6 +45,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
         {
           onSuccess() {
             handleDialogClose()
+            form.reset()
           },
         }
       )
@@ -55,6 +56,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
       {
         onSuccess() {
           handleDialogClose()
+          form.reset()
         },
       }
     )
@@ -66,9 +68,9 @@ const Create = ({ form, handleDialogClose }: Props) => {
       const findCategorie = allCategories?.find(
         (categorie) => categorie.id === id
       )
-      return form.setValue("category", findCategorie?.category ?? "")
+      return form.setValue('category', findCategorie?.category ?? '')
     } else form.reset(initialValues)
-  }, [id])
+  }, [id, allCategories, form])
 
   return (
     <>
@@ -76,12 +78,12 @@ const Create = ({ form, handleDialogClose }: Props) => {
         <div className="overflow-y-auto max-h-[40vh] ">
           <DialogHeader>
             <DialogTitle className="md:text-4xl  text-2xl text-primary/90">
-              {id ? "Updated Categorie " : "New categorie"}
+              {id ? 'Updated Categorie ' : 'New categorie'}
             </DialogTitle>
             <DialogDescription className="">
               {id
-                ? "Updated give it permission"
-                : "Create a new Categorie  give it permission"}
+                ? 'Updated give it permission'
+                : 'Create a new Categorie  give it permission'}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -119,9 +121,9 @@ const Create = ({ form, handleDialogClose }: Props) => {
               loadingIcon={<AiOutlineLoading className="animate-spin" />}
               disabled={pendingCreate || pendingUpdate}
               type="submit"
-              variant={"default"}
+              variant={'default'}
             >
-              {id ? " Update Category " : "Create Category"}
+              {id ? ' Update Category ' : 'Create Category'}
             </Button>
           </DialogFooter>
         </form>

@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -8,20 +8,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { zodResolver } from "@hookform/resolvers/zod"
-import Image from "next/image"
-import Link from "next/link"
-import { useForm } from "react-hook-form"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
-import { useAuth } from "../../services/mutation"
-import { defaultValuesLogin, formInputLogin, formSchemaLogin } from "./input"
+} from '@/components/ui/input-otp'
+import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { useAuth } from '../../services/mutation'
+import { defaultValuesLogin, formInputLogin, formSchemaLogin } from './input'
+import Prueba2 from './prueba2'
 
 const Login = () => {
   const { mutate: mutationAuth, isPending } = useAuth()
@@ -34,7 +35,8 @@ const Login = () => {
 
   return (
     <>
-      <Link href="/dashboard" />
+      {/* <Prueba2 /> */}
+      {/* <ProductForm /> */}
       <div className="flex h-screen overflow-x-auto">
         <div className="hidden lg:block lg:w-1/2 relative">
           <Image
@@ -44,7 +46,7 @@ const Login = () => {
             priority
             sizes="(max-width: 768px) 50vw"
             style={{
-              objectFit: "cover",
+              objectFit: 'cover',
             }}
           />
         </div>

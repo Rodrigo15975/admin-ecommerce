@@ -1,8 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
-
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 export class MethodsAxios implements MethodsAxiosInterface {
-  private readonly axiosAdapter: AxiosInstance 
+  private readonly axiosAdapter: AxiosInstance
   constructor(urlBase: string) {
     // add BASE-URL
     this.axiosAdapter = axios.create({
@@ -30,6 +29,7 @@ export class MethodsAxios implements MethodsAxiosInterface {
     return data
   }
   // T Es el tipado que te duelve, D tipado que se mandará
+  // el T PODRIA PONERLO DIRECTO ACA PARA QUE RESPONDA Y NOAÑADIRLO UNO POR UNO
   async POST<T, D>(url: string, dataPOST?: D, config?: AxiosRequestConfig) {
     const { data } = await this.axiosAdapter.post<T>(url, dataPOST, {
       ...config,

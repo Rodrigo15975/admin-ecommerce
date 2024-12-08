@@ -43,7 +43,7 @@ const Table = <T extends DataTableValueArray | undefined>({
           <Column
             key={`table-${index}-${column}`}
             sortable={column.sortable}
-            className="h-[4rem] border text-slate-500 border-bg_six/10 p-2 hover:bg-primary/10  transition font-medium "
+            className="h-[4rem] border w-full text-slate-500 border-bg_six/10 p-2 hover:bg-primary/10  transition font-medium "
             resizeable
             headerClassName={`${headerClassName}`}
             field={column.field}

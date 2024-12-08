@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query"
-import { getAllCategories } from "./api"
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { getAllCategories } from './api'
 
 export const useGetAllCategorys = () =>
   useQuery({
-    queryKey: ["categories"],
+    queryKey: ['categories'],
     queryFn: getAllCategories,
-    // staleTime: 10000,
+    retry: 3, // Reintentar 3 veces
+    retryDelay: 1000, // 1 segundo entre intentos
+    placeholderData: keepPreviousData,
   })

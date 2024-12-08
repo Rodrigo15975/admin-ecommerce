@@ -1,10 +1,10 @@
 import Table from "@/components/Table/Table"
-import { useGetAllCategorys } from "../../services/queries"
+import { useGetAllCategorys  } from "../../services/queries"
 import { CiViewList } from "react-icons/ci"
 import ColumnsCategoryPanel from "./columns-category-panel"
 
 const PanelCategoryTable = () => {
-  const { data, isLoading } = useGetAllCategorys()
+  const { data, isLoading } = useGetAllCategorys ()
   const { columns } = ColumnsCategoryPanel()
 
   return (

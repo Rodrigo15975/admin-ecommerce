@@ -1,17 +1,16 @@
-import { Toaster } from "@/components/ui/toaster"
-import type { Metadata } from "next"
-import NextTopLoader from "nextjs-toploader"
-import { PrimeReactProvider } from "primereact/api"
-
-import "primereact/resources/themes/lara-light-cyan/theme.css"
-import "./globals.css"
-
-import SidebarHandler from "@/provider/sidebarHandler"
-import QueryProvides from "@/provider/ReeactQueryProvider"
-import CookieProviderClient from "@/provider/CookieProvider"
+import { Toaster } from '@/components/ui/toaster'
+import CookieProviderClient from '@/provider/CookieProvider'
+import QueryProvides from '@/provider/ReeactQueryProvider'
+import SidebarHandler from '@/provider/sidebarHandler'
+import { AnimatePresence, domAnimation, LazyMotion } from 'framer-motion'
+import type { Metadata } from 'next'
+import NextTopLoader from 'nextjs-toploader'
+import { PrimeReactProvider } from 'primereact/api'
+import 'primereact/resources/themes/soho-light/theme.css'
+import './globals.css'
 export const metadata: Metadata = {
-  title: "RDG Admin",
-  description: "ADMIN",
+  title: 'RDG Admin',
+  description: 'ADMIN',
 }
 
 export default function RootLayout({
@@ -35,11 +34,20 @@ export default function RootLayout({
           showAtBottom={false}
         />
         <QueryProvides>
-          <PrimeReactProvider>
+          <PrimeReactProvider
+            value={{
+              // pt: Tailwind,
+              // unstyled: true,
+            }}
+          >
             <SidebarHandler>
-              <CookieProviderClient>
-                <>{children}</>
-              </CookieProviderClient>
+              <AnimatePresence>
+                <CookieProviderClient>
+                  <LazyMotion features={domAnimation}>
+                    <>{children}</>
+                  </LazyMotion>
+                </CookieProviderClient>
+              </AnimatePresence>
             </SidebarHandler>
             <Toaster />
           </PrimeReactProvider>
