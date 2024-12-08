@@ -4,9 +4,11 @@ import { ImageIcon } from 'lucide-react'
 import { FileUpload } from 'primereact/fileupload'
 import { Image } from 'primereact/image'
 import { useEffect, useRef } from 'react'
+import { FormMessage } from '../ui/form'
 interface DynamicUploadFileProps {
   onUpload: (file: File | null) => void
   [key: string]: any
+  error: string | undefined
 }
 
 const defaultEmptyTemplate = () => (
@@ -46,12 +48,9 @@ export default function DynamicUploadFile({
 
   const handleSelect = (e: { files: File[] }) =>
     e.files[0] ? onUpload(e.files[0]) : null
-  // const file = e.files[0] || null
-  // onUpload(file)
-  // }
 
   return (
-    <article className="">
+    <article>
       <FileUpload
         ref={fileUploadRef}
         style={{
@@ -72,6 +71,7 @@ export default function DynamicUploadFile({
         emptyTemplate={emptyTemplateContent || defaultEmptyTemplate}
         {...props}
       />
+      {props.error && <FormMessage />}
     </article>
   )
 }

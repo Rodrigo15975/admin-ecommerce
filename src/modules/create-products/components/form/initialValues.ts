@@ -1,11 +1,10 @@
-
 export const initialValues: InitialValuesProduct = {
   products: [
     {
       product: '',
       productVariant: [
         {
-          color: '',
+          color: '000000',
           image: null,
         },
       ],
@@ -43,4 +42,3 @@ export const gender = [
     value: 'Other',
   },
 ]
-

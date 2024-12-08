@@ -29,7 +29,7 @@ const FormSelectInputGender = ({ field }: Props) => {
             value={String(field.value)}
             onValueChange={(value) => field.onChange(value)} // Asignamos el valor seleccionado al campo del formulario
           >
-            <SelectTrigger className="focus:ring-2 focus:ring-primary/50 text-primary font-medium border-none outline-none shadow transition-all rounded w-full ring-1 ring-primary/20">
+            <SelectTrigger className="focus:ring-2 focus:ring-primary/50 text-primary font-medium border-none outline-none shadow transition-all rounded w-full ring-1 ring-blue-300/20">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

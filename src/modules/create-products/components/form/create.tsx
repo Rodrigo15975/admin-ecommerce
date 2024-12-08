@@ -17,15 +17,20 @@ import { useResetStore } from '../../store/clearUpload'
 import FormCheckInput from './form-check-input'
 import FormSelectInputCategorie from './form-select-input-categorie'
 import FormSelectInputGender from './form-select-input-gender'
-import { productAnimation } from './initialAnimation'
+import { productAnimation } from '../../animation/initialAnimation'
 import { initialValues } from './initialValues'
 import { inputProductInventory, productFields } from './input'
 import ProductsVariants from './products-variants'
+import { zodResolver } from '@hookform/resolvers/zod'
+import initialValuesSchema from './schema/schema'
+import axios from 'axios'
+import { useMethods } from '@/adapters/methods'
+import convertToFormData from '../../utils/convertedFormData'
 
 const Create = () => {
   const formProducts = useForm<InitialValuesProduct>({
     defaultValues: initialValues,
-    // resolver: zodResolver(initialValuesSchema),
+    resolver: zodResolver(initialValuesSchema),
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -38,17 +43,25 @@ const Create = () => {
   const appendProduct = () => append(initialValues.products)
   const removeProduct = (index: number) => remove(index)
 
-  // ya esta reseteado todo importante
-  const onSubmit = (data: InitialValuesProduct) => {
-    console.log(data)
+  const onSubmit = async (data: InitialValuesProduct) => {
+    const dataForm = convertToFormData(data)
+    console.log(dataForm)
 
-    formProducts.reset()
-    formProducts.setValue('products', initialValues.products)
-    formProducts.clearErrors() // Esto limpia los errores
-    incrementReset()
+    // const formData = new FormData()
+    // formData.append('products', JSON.stringify(data.products))
+    const response = await useMethods.POST('/products', dataForm, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    console.log({ data: response })
+
+    // formProducts.reset()
+    // formProducts.setValue('products', initialValues.products)
+    // formProducts.clearErrors() // Esto limpia los errores
+    // incrementReset()
   }
 
-  // YA ESTA SOLO FALTA PONER EL MISMO ESTIL OY EL FILE Y EL COLOR VARIANT DE PRODUCT E INVENTORI Y YA PROBAR CON EL BACKEND HA CIERTO EL UPLOAD
   return (
     <article className="md:px-8 md:py-8 xl:flex-col xl:flex">
       <Form {...formProducts}>

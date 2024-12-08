@@ -1,16 +1,27 @@
+'use client'
 import ButtonAddOriginUI, {
   ButtonRemoveOriginUI,
 } from '@/components/ui/button-origin-ui'
-import { FormDescription } from '@/components/ui/form'
+import { FormDescription, FormField } from '@/components/ui/form'
 import UploadFile from '@/components/upload/upload'
 import { motion } from 'framer-motion'
+import {
+  ColorPicker,
+  ColorPickerHSBType,
+  ColorPickerRGBType,
+} from 'primereact/colorpicker'
 import { Divider } from 'primereact/divider'
+import { Nullable } from 'primereact/ts-helpers'
 import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useResetStore } from '../../store/clearUpload'
 import { initialValues } from './initialValues'
+import { useEffect, useRef } from 'react'
 interface ProductVariantsProps {
   productIndex: number
 }
 const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
+  const resetCount = useResetStore((state) => state.resetCount)
+  const changeColorRef = useRef<null | ColorPicker>(null)
   const { control, setValue } = useFormContext<typeof initialValues>()
   const { fields, append, remove } = useFieldArray({
     control,
@@ -27,6 +38,22 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
       image
     )
 
+  const handleColorChange = (
+    value: Nullable<string | ColorPickerRGBType | ColorPickerHSBType>,
+    variantIndex: number
+  ) =>
+    setValue(
+      `products.${productIndex}.productVariant.${variantIndex}.color`,
+      String(value)
+    )
+
+  useEffect(() => {
+    // Limpia el color de todas las variantes cuando `resetCount` cambie
+    fields.forEach((_, index) => {
+      setValue(`products.${productIndex}.productVariant.${index}.color`, '')
+    })
+  }, [resetCount, fields, setValue, productIndex])
+
   return (
     <article className="xl:pr-16">
       <>
@@ -37,15 +64,45 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <Divider />
-            <h4 className="text-2xl  text-primary/80 font-medium">
+            <div className="">
+              <Divider />
               <FormDescription />
-              Variant {variantIndex + 1}
-            </h4>
+              <h4 className="text-2xl underline underline-offset-4  text-primary/80 font-medium">
+                Variant {variantIndex + 1}
+              </h4>
+              <Divider />
+              <div className="flex gap-2  items-center justify-end">
+                <p className="text-primary/80 font-medium">Choose color </p>
+                <FormField
+                  key={`${variantIndex}`}
+                  control={control}
+                  name={`products.${productIndex}.productVariant.${variantIndex}.color`}
+                  render={({ field }) => (
+                    <ColorPicker
+                      key={fields[variantIndex]?.color} // Forzar re-renderizado al cambiar el color
+                      ref={changeColorRef}
+                      value={field.value}
+                      className="ring-1 p-1 rounded ring-primary/30"
+                      onChange={({ value }) =>
+                        handleColorChange(value, variantIndex)
+                      }
+                    />
+                  )}
+                />
+              </div>
+            </div>
             <Divider />
-            <UploadFile
-              onUpload={(file) => handleImageUpload(file, variantIndex)}
+            <FormField
+              control={control}
+              name={`products.${productIndex}.productVariant.${variantIndex}.image`}
+              render={({ fieldState }) => (
+                <UploadFile
+                  error={fieldState.error?.message}
+                  onUpload={(file) => handleImageUpload(file, variantIndex)}
+                />
+              )}
             />
+
             <Divider />
             <ButtonRemoveOriginUI
               type="button"

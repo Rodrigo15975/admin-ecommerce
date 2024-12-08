@@ -1,6 +1,7 @@
 interface ProductVariant {
   color: string
   image: null | File
+  url?: string
 }
 
 interface ProductInventory {
@@ -9,8 +10,8 @@ interface ProductInventory {
 }
 
 interface Product {
-  product: string
   id?: number
+  product: string
   productVariant: ProductVariant[]
   price: number
   size: string[]

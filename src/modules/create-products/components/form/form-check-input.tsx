@@ -30,7 +30,7 @@ const FormCheckInput = ({ productIndex }: Props) => {
                     key={`${field.name}-${indexSize} `}
                     label={size.label}
                     checked={field.value?.includes(size.value) || false} 
-                    className="w-full shadow rounded-md hover:bg-green-200"
+                    className="w-full shadow rounded hover:bg-green-200"
                     // checked={Boolean(field.value)}
                     onCheckedChange={(checkedSize) => {
                       const updatedSizes = checkedSize
