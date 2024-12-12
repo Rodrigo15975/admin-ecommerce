@@ -25,7 +25,8 @@ const ColumnsCategoryPanel = () => {
         target: e?.currentTarget as HTMLButtonElement,
         message: `Deleted categories ${data.category} ?`,
         accept,
-        acceptClassName: 'ml-4 p-2 bg-primary text-white ',
+        acceptClassName: 'ml-4 p-2 bg-primary text-white font-poppins',
+        className: 'font-poppins',
       })
     }
 

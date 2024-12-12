@@ -26,12 +26,12 @@ export const useCreateCategorie = () => {
         })
       }
     },
-    async onSuccess(data) {
+    async onSuccess(response) {
       await queryClient.invalidateQueries({
         queryKey: ['categories'],
       })
       toast({
-        title: `${data.message}`,
+        title: `${response.message}`,
         description: `Category has been created.`,
         variant: 'default',
         className:
@@ -57,12 +57,12 @@ export const useDeleteCategorie = () => {
         })
       }
     },
-    async onSuccess(data) {
+    async onSuccess(response) {
       await queryClient.invalidateQueries({
         queryKey: ['categories'],
       })
       toast({
-        title: `${data.message}`,
+        title: `${response.message}`,
         description: `Category has been created.`,
         variant: 'default',
         className:

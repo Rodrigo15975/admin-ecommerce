@@ -75,6 +75,9 @@
   }
 }
 
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
 .p-icon .p-sortable-column-icon {
   color: white !important;
 }

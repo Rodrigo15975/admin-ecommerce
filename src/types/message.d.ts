@@ -1,6 +1,8 @@
 interface HttpResponse {
-  statusCode: number
   message: string
+  service: string
+  statusCode: number
+  timestamp: number
 }
 interface Cookies {
   auth: string

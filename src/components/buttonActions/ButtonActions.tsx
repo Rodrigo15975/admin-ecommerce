@@ -1,6 +1,6 @@
-import React from "react"
-import { Edit2, Trash2Icon } from "lucide-react"
-import { Button } from "primereact/button"
+import React from 'react'
+import { Edit2, Trash2Icon } from 'lucide-react'
+import { Button } from 'primereact/button'
 
 type Props = {
   hanledDelete: (e: React.SyntheticEvent) => void
@@ -23,19 +23,25 @@ const ButtonActions = ({
     <>
       <Button
         tooltip="Delete"
+        tooltipOptions={{
+          position: 'top',
+        }}
         disabled={isPendingDisabledEdit}
-        className="p-2 bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-red-800/20 via-red-600/20 to-red-400/20"
+        className=" font-poppins p-2 bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-rose-300 via-red-600 rounded-full to-red-400"
         onClick={hanledDelete}
       >
-        <Trash2Icon />
+        <Trash2Icon className="text-white" />
       </Button>
       <Button
         tooltip="Edit"
+        tooltipOptions={{
+          position: 'top',
+        }}
         disabled={isPendingDisabledDelete}
-        className="p-2 border shadow"
+        className="rounded-full font-poppins p-2 border shadow"
         onClick={hanledEdit}
       >
-        <Edit2 />
+        <Edit2 className='text-green-400' />
       </Button>
       {newButton && children}
     </>

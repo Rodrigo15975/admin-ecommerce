@@ -39,6 +39,7 @@ export function ButtonRemoveOriginUI({
   return (
     <Button
       {...props}
+      type={props.type}
       variant={'destructive'}
       className={`relative pe-12 ${cn(className)} bg-red-400`}
     >

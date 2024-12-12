@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
 const productVariantSchema = z.object({
-  color: z.string().min(1, 'Color is required'),
-  image: z.instanceof(File).nullable(),
+  color: z.string().min(1, 'Color is required').optional().nullable(),
+  image: z.instanceof(File, { message: 'A valid file is required' }),
+  // .refine((file) => file.size > 0, { message: 'File cannot be empty' }),
 })
 
 const productInventorySchema = z.object({
@@ -24,11 +25,7 @@ export const productSchema = z.object({
     .min(1, 'At least one size must be selected'), // Validación requerida
   gender: z.string().min(1, 'Gender is required'),
   brand: z.string().min(1, 'Brand is required'),
-  description: z
-    .string()
-    .min(1, 'Description is required')
-    .nullable()
-    .optional(),
+  description: z.string().nullable().optional(),
   quantity: z.preprocess(
     (value) => Number(value),
     z.number().min(0, 'Quantity must be 0 or greater')

@@ -7,27 +7,29 @@ import ButtonAddOriginUI, {
 import { Form, FormField } from '@/components/ui/form'
 import InputNumberUI from '@/components/ui/inputNumber'
 import { Label } from '@/components/ui/label'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ListTodoIcon } from 'lucide-react'
 import { Divider } from 'primereact/divider'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { useFieldArray, useForm } from 'react-hook-form'
+import { FaTruckLoading } from 'react-icons/fa'
 import { IoCreateOutline } from 'react-icons/io5'
+import { productAnimation } from '../../animation/initialAnimation'
+import { useCreateProduct } from '../../services/mutation'
 import { useResetStore } from '../../store/clearUpload'
+import convertToFormData from '../../utils/convertedFormData'
 import FormCheckInput from './form-check-input'
 import FormSelectInputCategorie from './form-select-input-categorie'
 import FormSelectInputGender from './form-select-input-gender'
-import { productAnimation } from '../../animation/initialAnimation'
 import { initialValues } from './initialValues'
 import { inputProductInventory, productFields } from './input'
 import ProductsVariants from './products-variants'
-import { zodResolver } from '@hookform/resolvers/zod'
 import initialValuesSchema from './schema/schema'
-import axios from 'axios'
-import { useMethods } from '@/adapters/methods'
-import convertToFormData from '../../utils/convertedFormData'
 
 const Create = () => {
+  const { mutate: mutateCreateProduct, isPending: isPedinginCreateProduct } =
+    useCreateProduct()
   const formProducts = useForm<InitialValuesProduct>({
     defaultValues: initialValues,
     resolver: zodResolver(initialValuesSchema),
@@ -42,26 +44,17 @@ const Create = () => {
 
   const appendProduct = () => append(initialValues.products)
   const removeProduct = (index: number) => remove(index)
-
-  const onSubmit = async (data: InitialValuesProduct) => {
+  const onSubmit = (data: InitialValuesProduct) => {
     const dataForm = convertToFormData(data)
-    console.log(dataForm)
-
-    // const formData = new FormData()
-    // formData.append('products', JSON.stringify(data.products))
-    const response = await useMethods.POST('/products', dataForm, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+    mutateCreateProduct(dataForm, {
+      onSuccess() {
+        formProducts.reset()
+        formProducts.setValue('products', initialValues.products)
+        formProducts.clearErrors()
+        incrementReset()
       },
     })
-    console.log({ data: response })
-
-    // formProducts.reset()
-    // formProducts.setValue('products', initialValues.products)
-    // formProducts.clearErrors() // Esto limpia los errores
-    // incrementReset()
   }
-
   return (
     <article className="md:px-8 md:py-8 xl:flex-col xl:flex">
       <Form {...formProducts}>
@@ -217,7 +210,9 @@ const Create = () => {
                     <div className="grid grid-cols-3 mt-10 grid-rows-3 gap-2">
                       <FormCheckInput productIndex={productIndex} />
                     </div>
+
                     <ProductsVariants productIndex={productIndex} />
+
                     <Divider />
                     {productFields.products
                       .slice(7, 8)
@@ -247,6 +242,7 @@ const Create = () => {
                     <div className="flex justify-end">
                       <ButtonRemoveOriginUI
                         title="Remove"
+                        type="button"
                         className="my-8"
                         disabled={
                           formProducts.getValues().products.length === 1
@@ -263,6 +259,8 @@ const Create = () => {
               <div className="flex sticky space-x-4 top-4 w-full ">
                 <Button
                   type="submit"
+                  loading={isPedinginCreateProduct}
+                  loadingIcon={<FaTruckLoading className="animate-spin" />}
                   className="gap-1 rounded shadow-md w-full bg-blue-300"
                 >
                   <IoCreateOutline />

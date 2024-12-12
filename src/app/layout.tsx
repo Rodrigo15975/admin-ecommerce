@@ -8,6 +8,7 @@ import NextTopLoader from 'nextjs-toploader'
 import { PrimeReactProvider } from 'primereact/api'
 import 'primereact/resources/themes/soho-light/theme.css'
 import './globals.css'
+import { ConfirmPopup } from 'primereact/confirmpopup'
 export const metadata: Metadata = {
   title: 'RDG Admin',
   description: 'ADMIN',
@@ -35,21 +36,26 @@ export default function RootLayout({
         />
         <QueryProvides>
           <PrimeReactProvider
-            value={{
-              // pt: Tailwind,
-              // unstyled: true,
-            }}
+            value={
+              {
+                // pt: Tailwind,
+                // unstyled: true,
+              }
+            }
           >
             <SidebarHandler>
               <AnimatePresence>
                 <CookieProviderClient>
                   <LazyMotion features={domAnimation}>
-                    <>{children}</>
+                    <>
+                      {children}
+                      <Toaster />
+                      <ConfirmPopup />
+                    </>
                   </LazyMotion>
                 </CookieProviderClient>
               </AnimatePresence>
             </SidebarHandler>
-            <Toaster />
           </PrimeReactProvider>
         </QueryProvides>
       </body>

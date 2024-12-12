@@ -1,9 +1,6 @@
-interface FormValues {
-  products: Product[]
-}
 
 // Función para convertir el formulario a FormData
-const convertToFormData = (data: FormValues): FormData => {
+const convertToFormData = (data: InitialValuesProduct): FormData => {
   const formData = new FormData()
 
   data.products.forEach((product, productIndex) => {

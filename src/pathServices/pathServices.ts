@@ -8,4 +8,5 @@ export const enum PathServices {
   LOGOUT = '/auth/logout',
   CATEGORIES = '/category',
   CATEGORIESDISCOUNT = '/category/discount',
+  PRODUCTS = '/products',
 }

@@ -2,20 +2,15 @@
 import ButtonAddOriginUI, {
   ButtonRemoveOriginUI,
 } from '@/components/ui/button-origin-ui'
-import { FormDescription, FormField } from '@/components/ui/form'
+import { FormDescription, FormField, FormMessage } from '@/components/ui/form'
 import UploadFile from '@/components/upload/upload'
 import { motion } from 'framer-motion'
-import {
-  ColorPicker,
-  ColorPickerHSBType,
-  ColorPickerRGBType,
-} from 'primereact/colorpicker'
+import { ColorPicker } from 'primereact/colorpicker'
 import { Divider } from 'primereact/divider'
-import { Nullable } from 'primereact/ts-helpers'
+import { useEffect, useRef } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useResetStore } from '../../store/clearUpload'
 import { initialValues } from './initialValues'
-import { useEffect, useRef } from 'react'
 interface ProductVariantsProps {
   productIndex: number
 }
@@ -38,13 +33,10 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
       image
     )
 
-  const handleColorChange = (
-    value: Nullable<string | ColorPickerRGBType | ColorPickerHSBType>,
-    variantIndex: number
-  ) =>
+  const handleColorChange = (value: string, variantIndex: number) =>
     setValue(
       `products.${productIndex}.productVariant.${variantIndex}.color`,
-      String(value)
+      value
     )
 
   useEffect(() => {
@@ -78,15 +70,18 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
                   control={control}
                   name={`products.${productIndex}.productVariant.${variantIndex}.color`}
                   render={({ field }) => (
-                    <ColorPicker
-                      key={fields[variantIndex]?.color} // Forzar re-renderizado al cambiar el color
-                      ref={changeColorRef}
-                      value={field.value}
-                      className="ring-1 p-1 rounded ring-primary/30"
-                      onChange={({ value }) =>
-                        handleColorChange(value, variantIndex)
-                      }
-                    />
+                    <>
+                      <ColorPicker
+                        key={fields[variantIndex]?.color} // Forzar re-renderizado al cambiar el color
+                        ref={changeColorRef}
+                        value={field.value || '#000000'}
+                        className="ring-1 p-1 rounded ring-primary/30"
+                        onChange={({ value }) =>
+                          handleColorChange(String(value), variantIndex)
+                        }
+                      />
+                      <FormMessage />
+                    </>
                   )}
                 />
               </div>
@@ -96,10 +91,13 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
               control={control}
               name={`products.${productIndex}.productVariant.${variantIndex}.image`}
               render={({ fieldState }) => (
-                <UploadFile
-                  error={fieldState.error?.message}
-                  onUpload={(file) => handleImageUpload(file, variantIndex)}
-                />
+                <>
+                  <UploadFile
+                    error={fieldState.error?.message}
+                    onUpload={(file) => handleImageUpload(file, variantIndex)}
+                  />
+                  <FormMessage />
+                </>
               )}
             />
 

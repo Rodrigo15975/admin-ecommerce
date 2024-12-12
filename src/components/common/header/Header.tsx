@@ -1,18 +1,18 @@
-"use client"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { useGetProfile } from "@/modules/users/services"
-import Image from "next/image"
-import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup"
-import { Sidebar as SidebarMobile } from "primereact/sidebar"
-import { useState } from "react"
-import { GiHamburgerMenu } from "react-icons/gi"
-import { IoExitOutline } from "react-icons/io5"
-import { LuFolderSearch } from "react-icons/lu"
-import InputSearchGlobal from "../input-search-global/inputSearchGlobal"
-import LinksItemsSidebar from "../Sidebar/linksItemsSidebar"
-import ButtonLogout from "./buttonLogout"
+'use client'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useGetProfile } from '@/modules/users/services'
+import Image from 'next/image'
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup'
+import { Sidebar as SidebarMobile } from 'primereact/sidebar'
+import { useState } from 'react'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { IoExitOutline } from 'react-icons/io5'
+import { LuFolderSearch } from 'react-icons/lu'
+import InputSearchGlobal from '../input-search-global/inputSearchGlobal'
+import LinksItemsSidebar from '../Sidebar/linksItemsSidebar'
+import ButtonLogout from './buttonLogout'
 
 const Header: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false)
@@ -27,17 +27,14 @@ const Header: React.FC = () => {
           <Badge>Username:{data?.name}</Badge>
         </>
       ),
-      icon: "pi pi-exclamation-triangle",
-      defaultFocus: "accept",
+      icon: 'pi pi-exclamation-triangle',
+      defaultFocus: 'accept',
       footer: ({ reject }) => <ButtonLogout reject={reject} />,
     })
   }
 
-    
-
   return (
     <div className="flex border-b items-center gap-3 justify-between">
-      <ConfirmPopup />
       <div className="xl:hidden pl-4 ">
         <Button onClick={openSidebarMobile} className="rounded">
           <GiHamburgerMenu />
