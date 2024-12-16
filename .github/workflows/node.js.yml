@@ -12,9 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production
-    env:
-      NODE_ENV: production
+    # environment: production
+    # env:
+    #   NODE_ENV: production
     strategy:
       matrix:
         node-version: [22.x]
@@ -29,5 +29,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
+
       - name: test
         run: echo "Tests passed successfully"
