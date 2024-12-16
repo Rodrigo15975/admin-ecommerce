@@ -7,10 +7,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useDeleteArchive } from '@/modules/products/services/mutation'
 import { m } from 'framer-motion'
 import { ArchiveX, BookDown } from 'lucide-react'
 import { Button } from 'primereact/button'
 import { Image } from 'primereact/image'
+import { LiaTruckLoadingSolid } from 'react-icons/lia'
 
 type Props = {
   data: FindAllProducts
@@ -18,6 +20,9 @@ type Props = {
 
 export function ProductVariantsDetails({ data }: Props) {
   const { productVariant, product } = data
+  const { mutate, isPending } = useDeleteArchive()
+  const deleteArchive = (key_url: string) => mutate(key_url)
+
   return (
     <Dialog modal>
       <DialogTrigger asChild>
@@ -50,9 +55,12 @@ export function ProductVariantsDetails({ data }: Props) {
             >
               <Button
                 tooltip="Delete archive"
+                onClick={() => deleteArchive(variant.key_url)}
                 tooltipOptions={{
                   position: 'top',
                 }}
+                loadingIcon={<LiaTruckLoadingSolid className="animate-spin" />}
+                disabled={isPending}
                 className="absolute bottom-0 right-0 rounded-md bg-primary flex justify-center items-center p-2 mb-2 hover:bg-primary/50 mr-2"
                 icon={<ArchiveX className="text-3xl  text-white " />}
               />

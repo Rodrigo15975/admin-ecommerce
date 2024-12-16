@@ -4,7 +4,7 @@ export const initialValues: InitialValuesProduct = {
       product: '',
       productVariant: [
         {
-          color: '000000',
+          color: 'ffffff',
           image: null,
         },
       ],

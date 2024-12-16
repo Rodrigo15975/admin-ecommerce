@@ -1,7 +1,7 @@
-"use client"
-import { Column, ColumnProps } from "primereact/column"
-import { DataTable, DataTableValueArray } from "primereact/datatable"
-import React from "react"
+'use client'
+import { Column, ColumnProps } from 'primereact/column'
+import { DataTable, DataTableValueArray } from 'primereact/datatable'
+import React from 'react'
 
 interface PropsTable<T> {
   columnsConfig: ColumnProps[]
@@ -32,12 +32,20 @@ const Table = <T extends DataTableValueArray | undefined>({
         value={data}
         rows={row ? row : 5}
         globalFilter={globalFilter}
+        tableStyle={{
+          minWidth: '100%',
+          maxWidth: '100%',
+        }}
         resizableColumns
         loading={loading}
         aria-errormessage="error"
+        title="Nothing adat"
+        rowsPerPageOptions={[5, 10, 20, 50]}
         header={header}
         // Puede hacer quie aparezca el scroll cuando el max width es menor
         className={` ${className} w-full min-h-[75vh]`}
+        editMode='row'
+        
       >
         {columnsConfig.map((column, index) => (
           <Column
@@ -47,7 +55,7 @@ const Table = <T extends DataTableValueArray | undefined>({
             resizeable
             headerClassName={`${headerClassName}`}
             field={column.field}
-            align={"center"}
+            align={'center'}
             body={column.body}
             header={column.header}
           />

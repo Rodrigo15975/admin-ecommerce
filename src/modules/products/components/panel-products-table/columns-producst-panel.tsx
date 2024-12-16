@@ -4,6 +4,7 @@ import { ColumnProps } from 'primereact/column'
 import { confirmPopup } from 'primereact/confirmpopup'
 import { Tag } from 'primereact/tag'
 import { SyntheticEvent } from 'react'
+import FormUploadVariants from '../create/form-upload-variants'
 import ColumnDeleteProduct from './columns/column-delete-product'
 import ColumnNewProduct from './columns/column-new-product'
 import { ProductVariantsDetails } from './columns/column-product-variant'
@@ -19,7 +20,7 @@ const ColumnsProductsPanel = () => {
       target: e.currentTarget as HTMLElement,
       message: (
         <>
-          <Label className='font-poppins'>
+          <Label className="font-poppins">
             Delete Product <span className="font-bold">{data.product}</span>
           </Label>
         </>
@@ -31,16 +32,21 @@ const ColumnsProductsPanel = () => {
       ),
     })
   }
+  const NewVariantProduct = (data: FindAllProducts) => (
+    <FormUploadVariants dataProduct={data} />
+  )
 
   const buttonActions = (data: FindAllProducts) => {
     return (
       <>
-        <div className="space-x-4">
+        <div className="space-x-4 flex items-center justify-center">
           <ButtonActions
             hanledDelete={(e) => deleteProduct(e, data)}
             hanledEdit={() => {}}
             newButton
-          />
+          >
+            <NewVariantProduct {...data} />
+          </ButtonActions>
         </div>
       </>
     )

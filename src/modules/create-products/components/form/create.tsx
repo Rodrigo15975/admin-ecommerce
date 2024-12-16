@@ -41,7 +41,7 @@ const Create = () => {
   })
 
   const incrementReset = useResetStore((state) => state.incrementReset)
-
+  const disabledButtonMaxForm = formProducts.getValues().products.length === 2
   const appendProduct = () => append(initialValues.products)
   const removeProduct = (index: number) => remove(index)
   const onSubmit = (data: InitialValuesProduct) => {
@@ -55,6 +55,7 @@ const Create = () => {
       },
     })
   }
+
   return (
     <article className="md:px-8 md:py-8 xl:flex-col xl:flex">
       <Form {...formProducts}>
@@ -269,6 +270,7 @@ const Create = () => {
                 <ButtonAddOriginUI
                   className="w-full rounded shadow-md "
                   type="button"
+                  disabled={disabledButtonMaxForm}
                   title="Add new"
                   onClick={appendProduct}
                 />

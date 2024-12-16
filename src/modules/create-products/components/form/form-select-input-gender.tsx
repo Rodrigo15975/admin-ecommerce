@@ -17,6 +17,7 @@ import { gender } from './initialValues'
 
 type Props = {
   productIndex?: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: any
 }
 const FormSelectInputGender = ({ field }: Props) => {

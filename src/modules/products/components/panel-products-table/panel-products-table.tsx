@@ -7,7 +7,7 @@ import { useGetAllProducts } from '@/modules/create-products/services/queries'
 
 const PanelProductsTable = () => {
   const { columns } = ColumnsProductsPanel()
-  const { data } = useGetAllProducts()
+  const { data, isLoading } = useGetAllProducts()
   return (
     <>
       <Table
@@ -15,7 +15,7 @@ const PanelProductsTable = () => {
         data={data}
         className="font-poppins w-full "
         headerClassName="text-primary bg-primary text-white  border-t border-b font-normal"
-        // loading={}
+        loading={isLoading}
         row={20}
         header={
           <h1 className="font-light ring-1 ring-primary/15 flex items-center gap-2 bg-white p-4 rounded text-primary/80">

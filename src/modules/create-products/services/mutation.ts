@@ -22,12 +22,11 @@ export const useCreateProduct = () => {
       })
     },
     onError(error: AxiosError) {
-      const { message } = error.response?.data as { message: string }
+      const rawMessage = error.response?.data as { message: string }
 
       toast({
-        title: message,
-        description: 'Error to creating product',
-        duration: 2000,
+        title: rawMessage.message,
+        duration: 3000,
         className: 'bg-gradient-to-t from-orange-100 to-orange-100',
       })
     },

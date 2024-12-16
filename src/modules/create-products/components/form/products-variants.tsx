@@ -5,9 +5,9 @@ import ButtonAddOriginUI, {
 import { FormDescription, FormField, FormMessage } from '@/components/ui/form'
 import UploadFile from '@/components/upload/upload'
 import { motion } from 'framer-motion'
-import { ColorPicker } from 'primereact/colorpicker'
 import { Divider } from 'primereact/divider'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+import { SketchPicker } from 'react-color'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useResetStore } from '../../store/clearUpload'
 import { initialValues } from './initialValues'
@@ -16,13 +16,15 @@ interface ProductVariantsProps {
 }
 const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
   const resetCount = useResetStore((state) => state.resetCount)
-  const changeColorRef = useRef<null | ColorPicker>(null)
   const { control, setValue } = useFormContext<typeof initialValues>()
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: `products.${productIndex}.productVariant`,
   })
+
   const disabledButtonRemoved = fields.length === 1
+  const disabledButtonMaxFormVariant = fields.length === 3
 
   const appendVariant = () => append({ color: '', image: null })
   const removeVariant = (index: number) => remove(index)
@@ -41,9 +43,14 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
 
   useEffect(() => {
     // Limpia el color de todas las variantes cuando `resetCount` cambie
-    fields.forEach((_, index) => {
-      setValue(`products.${productIndex}.productVariant.${index}.color`, '')
-    })
+    if (resetCount) {
+      fields.forEach((_, index) => {
+        setValue(
+          `products.${productIndex}.productVariant.${index}.color`,
+          '#ffffff'
+        )
+      })
+    }
   }, [resetCount, fields, setValue, productIndex])
 
   return (
@@ -71,13 +78,12 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
                   name={`products.${productIndex}.productVariant.${variantIndex}.color`}
                   render={({ field }) => (
                     <>
-                      <ColorPicker
-                        key={fields[variantIndex]?.color} // Forzar re-renderizado al cambiar el color
-                        ref={changeColorRef}
-                        value={field.value || '#000000'}
+                      <SketchPicker
+                        key={fields[variantIndex]?.color}
+                        color={field.value}
                         className="ring-1 p-1 rounded ring-primary/30"
-                        onChange={({ value }) =>
-                          handleColorChange(String(value), variantIndex)
+                        onChange={({ hex }) =>
+                          handleColorChange(hex, variantIndex)
                         }
                       />
                       <FormMessage />
@@ -96,7 +102,6 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
                     error={fieldState.error?.message}
                     onUpload={(file) => handleImageUpload(file, variantIndex)}
                   />
-                  <FormMessage />
                 </>
               )}
             />
@@ -117,6 +122,7 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
       <Divider />
       <ButtonAddOriginUI
         title="Add variant"
+        disabled={disabledButtonMaxFormVariant}
         className=" font-medium bg-green-400 text-white font-poppins w-[140px]"
         type="button"
         onClick={appendVariant}

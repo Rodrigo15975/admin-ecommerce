@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const productVariantSchema = z.object({
-  color: z.string().min(1, 'Color is required').optional().nullable(),
+  color: z.string().min(1, 'Color is required'),
   image: z.instanceof(File, { message: 'A valid file is required' }),
   // .refine((file) => file.size > 0, { message: 'File cannot be empty' }),
 })
