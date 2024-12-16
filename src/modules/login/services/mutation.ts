@@ -1,12 +1,12 @@
-import { useToast } from "@/hooks/use-toast"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { AxiosError } from "axios"
-import { useRouter } from "next/navigation"
-import { useCookies } from "react-cookie"
-import { auth, logout } from "./api"
+import { useToast } from '@/hooks/use-toast'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
+import { useCookies } from 'react-cookie'
+import { auth, logout } from './api'
 export const useAuth = () => {
   const { toast } = useToast()
-  const [, setCookie] = useCookies(["auth"])
+  const [, setCookie] = useCookies(['auth'])
   const router = useRouter()
 
   return useMutation({
@@ -14,18 +14,16 @@ export const useAuth = () => {
     onSuccess(data) {
       const { auth } = data
       if (auth) {
-        setCookie("auth", auth)
-        router.push("/dashboard") // Asegúrate de que el `push` se ejecute
+        setCookie('auth', auth)
+        router.push('/dashboard') // Asegúrate de que el `push` se ejecute
       }
     },
-    onError(error) {
-      if (error instanceof AxiosError) {
-        toast({
-          title: `${error.response?.data.message}`,
-          "aria-activedescendant": error.message,
-          className: "bg-gradient-to-t from-orange-200 to-orange-200",
-        })
-      }
+    onError(error: AxiosError<{ message: string }>) {
+      toast({
+        title: `${error.response?.data.message}`,
+        'aria-activedescendant': error.message,
+        className: 'bg-gradient-to-t from-orange-200 to-orange-200',
+      })
     },
   })
 }
@@ -33,27 +31,27 @@ export const useAuth = () => {
 export const useLogout = () => {
   const { toast } = useToast()
   const queryClient = useQueryClient()
-  const [, setCookie] = useCookies(["auth"])
+  const [, setCookie] = useCookies(['auth'])
   const router = useRouter()
 
   return useMutation({
     mutationFn: logout,
     async onSuccess(data) {
       if (data.success) {
-        setCookie("auth", data.auth)
-        router.push("/", {
+        setCookie('auth', data.auth)
+        router.push('/', {
           scroll: false,
         })
         await queryClient.cancelQueries()
         queryClient.clear()
       }
     },
-    onError(error) {
+    onError(error: AxiosError) {
       console.log(error)
       toast({
-        title: "Error al cerrar sesión",
-        "aria-activedescendant": error.message,
-        variant: "destructive",
+        title: 'Error al cerrar sesión',
+        'aria-activedescendant': error.message,
+        variant: 'destructive',
       })
     },
   })

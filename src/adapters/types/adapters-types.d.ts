@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { AxiosRequestConfig } from 'axios'
-
 interface MethodsAxiosInterface {
   GET: (url: string, config?: AxiosRequestConfig) => Promise<T>
   POST: (url: string, data?: T, config?: AxiosRequestConfig) => Promise<T>
