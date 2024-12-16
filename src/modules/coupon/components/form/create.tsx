@@ -1,42 +1,43 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Button as ButtonPrime } from "primereact/button"
+'use client'
+import { Button } from '@/components/ui/button'
+import { Button as ButtonPrime } from 'primereact/button'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton"
-import { useState } from "react"
-import { UseFormReturn } from "react-hook-form"
-import { AiOutlineLoading } from "react-icons/ai"
-import { storeEditcoupon } from "../../store/storeEditCoupon"
-import { Code2Icon } from "lucide-react"
-import { generateCouponCode } from "../../utils/generateCodeCoupon"
-import { formInputCoupon } from "../../utils/inputFormCoupon"
-import SelectInputProduct from "./selectInputProduct"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
+import { useState } from 'react'
+import { UseFormReturn } from 'react-hook-form'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { storeEditcoupon } from '../../store/storeEditCoupon'
+import { Code2Icon } from 'lucide-react'
+import { generateCouponCode } from '../../utils/generateCodeCoupon'
+import { formInputCoupon } from '../../utils/inputFormCoupon'
+import SelectInputProduct from './selectInputProduct'
 import {
   InputNumber,
   InputNumberValueChangeEvent,
-} from "primereact/inputnumber"
-import { Nullable } from "primereact/ts-helpers"
+} from 'primereact/inputnumber'
+import { Nullable } from 'primereact/ts-helpers'
 type Props = {
   handleDialogClose: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<CreateCoupon, any, undefined>
 }
 
 const Create = ({ form, handleDialogClose }: Props) => {
-  const options: string[] = ["Yes", "No"]
+  const options: string[] = ['Yes', 'No']
   const [couponISGlobal, setCouponGlobal] = useState<boolean>(false)
   const { id } = storeEditcoupon()
   const [discount, setDiscount] = useState<Nullable<number>>(0)
@@ -50,7 +51,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
 
   const generateCode = () => {
     const code = generateCouponCode()
-    form.setValue("code", code)
+    form.setValue('code', code)
   }
 
   return (
@@ -59,12 +60,12 @@ const Create = ({ form, handleDialogClose }: Props) => {
         <div className=" max-h-[40vh] ">
           <DialogHeader>
             <DialogTitle className="md:text-4xl  text-2xl text-primary/90">
-              {id ? "Updated Categorie " : "New Coupon"}
+              {id ? 'Updated Categorie ' : 'New Coupon'}
             </DialogTitle>
             <DialogDescription className="">
               {id
-                ? "Updated give it permission"
-                : "Create a new Coupon  give it permission"}
+                ? 'Updated give it permission'
+                : 'Create a new Coupon  give it permission'}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -139,15 +140,15 @@ const Create = ({ form, handleDialogClose }: Props) => {
                   <FormControl>
                     <SelectButton
                       {...field}
-                      value={couponISGlobal ? "Yes" : "No"}
+                      value={couponISGlobal ? 'Yes' : 'No'}
                       onChange={(e: SelectButtonChangeEvent) => {
-                        const selectedValue = e.value === "Yes"
+                        const selectedValue = e.value === 'Yes'
                         setCouponGlobal(selectedValue)
                         field.onChange(selectedValue)
                       }}
                       pt={{
                         button: {
-                          className: "w-full border space-y-4 ",
+                          className: 'w-full border space-y-4 ',
                         },
                       }}
                       options={options}
@@ -187,9 +188,9 @@ const Create = ({ form, handleDialogClose }: Props) => {
               loadingIcon={<AiOutlineLoading className="animate-spin" />}
               // disabled={pendingCreate || pendingUpdate}
               type="submit"
-              variant={"default"}
+              variant={'default'}
             >
-              {id ? " Update Coupon " : "Create Coupon"}
+              {id ? ' Update Coupon ' : 'Create Coupon'}
             </Button>
           </DialogFooter>
         </form>

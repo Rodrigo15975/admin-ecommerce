@@ -8,16 +8,12 @@ import { FormLabel } from './form'
 
 interface Props extends InputNumberProps {
   className?: string
+  // eslint-disable-next-line no-unused-vars
   onValueChange: (e: InputNumberValueChangeEvent) => void
   value?: number | null
 }
 
-const InputNumberUI = ({
-  className,
-  onValueChange,
-  value,
-  ...props
-}: Props) => {
+const InputNumberUI = ({ onValueChange, value, ...props }: Props) => {
   return (
     <div className="">
       <FormLabel className="text-primary/60 font-medium text-[16px]">

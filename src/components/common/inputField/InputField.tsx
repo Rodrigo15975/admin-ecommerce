@@ -11,13 +11,16 @@ export const InputField = ({
   label,
   type,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: any
   label: string
   type?: string
 }) => {
   return (
     <FormItem className="w-full">
-      <FormLabel className="text-primary/60 font-medium text-[16px]">{label}</FormLabel>
+      <FormLabel className="text-primary/60 font-medium text-[16px]">
+        {label}
+      </FormLabel>
       <FormControl>
         <Input
           type={type}

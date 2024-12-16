@@ -8,6 +8,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Control } from "react-hook-form"
 type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<CreateCoupon, any>
 }
 const SelectInputProduct = ({ control }: Props) => {

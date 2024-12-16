@@ -12,6 +12,7 @@ import { Control, FieldValues } from 'react-hook-form'
 
 interface DynamicFormInputsProps<T extends FieldValues> {
   inputs: { name: string; label: string; type?: string }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, T>
   fieldPrefix?: string
   chunkSize?: number

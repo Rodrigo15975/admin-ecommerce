@@ -17,6 +17,7 @@ import {
 import { useGetAllCategorys } from '@/modules/category/services/queries'
 
 type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: any
   label: string
 }

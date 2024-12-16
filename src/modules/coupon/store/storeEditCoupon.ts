@@ -2,6 +2,7 @@ import { create } from "zustand"
 
 type Store = {
   id: number | undefined
+  // eslint-disable-next-line no-unused-vars
   setId: (id: number | undefined) => void
 }
 

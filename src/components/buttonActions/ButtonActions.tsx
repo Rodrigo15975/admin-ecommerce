@@ -3,6 +3,7 @@ import { Edit2, Trash2Icon } from 'lucide-react'
 import { Button } from 'primereact/button'
 
 type Props = {
+  // eslint-disable-next-line no-unused-vars
   hanledDelete: (e: React.SyntheticEvent) => void
   hanledEdit: () => void
   isPendingDisabledEdit?: boolean
@@ -41,7 +42,7 @@ const ButtonActions = ({
         className="rounded-full font-poppins p-2 border shadow"
         onClick={hanledEdit}
       >
-        <Edit2 className='text-green-400' />
+        <Edit2 className="text-green-400" />
       </Button>
       {newButton && children}
     </>

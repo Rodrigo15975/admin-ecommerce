@@ -6,7 +6,9 @@ import { Image } from 'primereact/image'
 import { useEffect, useRef } from 'react'
 import { FormMessage } from '../ui/form'
 interface DynamicUploadFileProps {
+  // eslint-disable-next-line no-unused-vars
   onUpload: (file: File | null) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
   error: string | undefined
 }

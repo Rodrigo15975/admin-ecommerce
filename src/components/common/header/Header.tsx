@@ -6,7 +6,7 @@ import { useGetProfile } from '@/modules/users/services'
 import Image from 'next/image'
 import { confirmPopup } from 'primereact/confirmpopup'
 import { Sidebar as SidebarMobile } from 'primereact/sidebar'
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { IoExitOutline } from 'react-icons/io5'
 import { LuFolderSearch } from 'react-icons/lu'
@@ -19,9 +19,9 @@ const Header: React.FC = () => {
   const openSidebarMobile = () => setVisible(!visible)
   const { data } = useGetProfile()
 
-  const confirm1 = (event: any) => {
+  const confirm1 = (event: SyntheticEvent) => {
     confirmPopup({
-      target: event.currentTarget,
+      target: event.currentTarget as HTMLElement,
       message: (
         <>
           <Badge>Username:{data?.name}</Badge>

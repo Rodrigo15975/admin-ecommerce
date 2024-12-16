@@ -22,7 +22,6 @@ import { useForm } from 'react-hook-form'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { useAuth } from '../../services/mutation'
 import { defaultValuesLogin, formInputLogin, formSchemaLogin } from './input'
-import Prueba2 from './prueba2'
 
 const Login = () => {
   const { mutate: mutationAuth, isPending } = useAuth()

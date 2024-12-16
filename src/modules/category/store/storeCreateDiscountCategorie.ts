@@ -4,6 +4,7 @@ type Store = {
   openFormCreateDiscount: boolean
   setOpenFormCreateDiscount: () => void
 
+  // eslint-disable-next-line no-unused-vars
   setIdDiscount: (id: number | undefined) => void
   idDiscount: number | undefined
 }

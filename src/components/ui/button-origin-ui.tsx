@@ -13,7 +13,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export function ButtonOriginUI({
   title,
   className,
-  iconLeft,
+
   ...props
 }: ButtonProps) {
   return (
