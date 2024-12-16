@@ -1,24 +1,25 @@
-import { create } from "zustand"
+import { create } from 'zustand'
 
 type Store = {
   dataUpdate: UpdateUser
+  // eslint-disable-next-line no-unused-vars
   setDataUpdate: (data: UpdateUser) => void
 }
 
 export const storeUpdateUser = create<Store>((set) => ({
   dataUpdate: {
     id: undefined,
-    dni: "",
-    lastname: "",
-    name: "",
-    password: "",
-    phone: "",
+    dni: '',
+    lastname: '',
+    name: '',
+    password: '',
+    phone: '',
     role: {
-      role: "EMPLOYEE",
+      role: 'EMPLOYEE',
     },
     auditoria: {
       id: undefined,
-      role: "",
+      role: '',
     },
     user_active: true,
   },

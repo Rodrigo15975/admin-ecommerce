@@ -1,11 +1,11 @@
-"use client"
+'use client'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -13,18 +13,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form'
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { zodResolver } from "@hookform/resolvers/zod"
+} from '@/components/ui/input-otp'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useForm } from "react-hook-form"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { useForm } from 'react-hook-form'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
-import { Input } from "@/components/ui/input"
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -33,20 +33,20 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   useCreateUser,
   useGetAllRoles,
   useGetProfile,
   useUpdateUser,
-} from "@/modules/users/services"
-import { storeUpdateUser } from "@/modules/users/store/storeUpdateUser"
-import { formInputUser } from "@/modules/users/utils/formInputsUser"
-import { formSchemaUser } from "@/modules/users/utils/formSchemaUser"
-import { useEffect } from "react"
-import { defaultValuesCreateUser } from "./initialValue"
+} from '@/modules/users/services'
+import { storeUpdateUser } from '@/modules/users/store/storeUpdateUser'
+import { formInputUser } from '@/modules/users/utils/formInputsUser'
+import { formSchemaUser } from '@/modules/users/utils/formSchemaUser'
+import { useEffect } from 'react'
+import { defaultValuesCreateUser } from './initialValue'
 
 type Props = {
   handleDialogClose: () => void
@@ -70,8 +70,8 @@ const Create = ({ handleDialogClose }: Props) => {
 
   const onSubmit = (data: CreateUser) => {
     if (dataUpdate.id) {
-        console.log("user updated:",data);
-        
+      console.log('user updated:', data)
+
       return mutateUpdateUser(
         {
           ...data,
@@ -85,7 +85,7 @@ const Create = ({ handleDialogClose }: Props) => {
         {
           onSuccess() {
             form.reset()
-            form.setValue("role", "EMPLOYEE")
+            form.setValue('role', 'EMPLOYEE')
             handleDialogClose()
           },
         }
@@ -102,7 +102,7 @@ const Create = ({ handleDialogClose }: Props) => {
       {
         onSuccess() {
           form.reset()
-          form.setValue("role", "EMPLOYEE")
+          form.setValue('role', 'EMPLOYEE')
           handleDialogClose()
         },
       }
@@ -113,16 +113,16 @@ const Create = ({ handleDialogClose }: Props) => {
     if (dataUpdate.id) {
       const { dni, name, id, lastname, phone, role, user_active, password } =
         dataUpdate
-      form.setValue("dni", dni)
-      form.setValue("lastname", lastname)
-      form.setValue("name", name)
-      form.setValue("phone", phone)
-      form.setValue("user_active", user_active)
-      form.setValue("role", role.role)
-      form.setValue("password", password)
-      form.setValue("id", id)
+      form.setValue('dni', dni)
+      form.setValue('lastname', lastname)
+      form.setValue('name', name)
+      form.setValue('phone', phone)
+      form.setValue('user_active', user_active)
+      form.setValue('role', role.role)
+      form.setValue('password', password)
+      form.setValue('id', id)
     } else form.reset(defaultValuesCreateUser)
-  }, [dataUpdate, form.reset])
+  }, [dataUpdate, form.reset, form])
 
   return (
     <>
@@ -130,12 +130,12 @@ const Create = ({ handleDialogClose }: Props) => {
         <div className="overflow-y-auto max-h-[75vh] ">
           <DialogHeader>
             <DialogTitle className="md:text-4xl  text-2xl text-primary/90">
-              {dataUpdate.id ? "Updated User" : "New User"}
+              {dataUpdate.id ? 'Updated User' : 'New User'}
             </DialogTitle>
             <DialogDescription className="">
               {dataUpdate.id
-                ? "Updated give it permission"
-                : "Create a new user give it permission"}
+                ? 'Updated give it permission'
+                : 'Create a new user give it permission'}
             </DialogDescription>
 
             <Form {...form}>
@@ -188,9 +188,9 @@ const Create = ({ handleDialogClose }: Props) => {
                         render={({ field }) => (
                           <FormItem
                             className={`w-1/2 max-sm:w-full max-sm:text-start ${
-                              dataUpdate.id && input.text === "Password"
-                                ? "hidden w-full"
-                                : ""
+                              dataUpdate.id && input.text === 'Password'
+                                ? 'hidden w-full'
+                                : ''
                             }  `}
                           >
                             <FormLabel className="text-primary/60">
@@ -322,7 +322,7 @@ const Create = ({ handleDialogClose }: Props) => {
                       type="submit"
                       className="hover:bg-secondary bg-primary p-2 text-gray-50 justify-center w-full hover:text-primary rounded-full"
                     >
-                      {dataUpdate.id ? "Update user" : "Create new user"}
+                      {dataUpdate.id ? 'Update user' : 'Create new user'}
                     </Button>
                   </div>
                 </DialogFooter>
