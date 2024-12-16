@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,8 +16,9 @@ import { BookPlusIcon } from 'lucide-react'
 import { Button as ButtonPrime } from 'primereact/button'
 import { SketchPicker } from 'react-color'
 import { useForm } from 'react-hook-form'
-import { ImageVariant, productVariantSchema } from './schema/schema'
 import { useCreateArchiveProductVariant } from '../../services/mutation'
+import { ImageVariant, productVariantSchema } from './schema/schema'
+import { LiaTruckLoadingSolid } from 'react-icons/lia'
 
 type Props = {
   dataProduct: FindAllProducts
@@ -25,7 +26,7 @@ type Props = {
 
 const FormUploadVariants = ({ dataProduct }: Props) => {
   const { id, category, product } = dataProduct
-  const { mutate: createArchive } = useCreateArchiveProductVariant()
+  const { mutate: createArchive, isPending } = useCreateArchiveProductVariant()
   const disabledButton = dataProduct.productVariant.length === 3
   const formResetUpload = useResetStore((store) => store.incrementReset)
   const form = useForm<ImageVariant>({
@@ -47,20 +48,20 @@ const FormUploadVariants = ({ dataProduct }: Props) => {
     createArchive(
       { data, id, categorie: category.category },
       {
-        // onSuccess() {},
+        onSuccess() {
+          form.reset({
+            color: '',
+            image: null,
+          })
+          formResetUpload()
+        },
       }
     )
-    return
-    // form.reset({
-    //   color: '',
-    //   image: null,
-    // })
-    formResetUpload()
   }
 
   return (
     <>
-      <Dialog modal={true}>
+      <Dialog>
         <DialogTrigger asChild>
           <ButtonPrime
             tooltipOptions={{
@@ -74,13 +75,20 @@ const FormUploadVariants = ({ dataProduct }: Props) => {
             icon={<BookPlusIcon className="text-white" />}
           />
         </DialogTrigger>
-        <DialogContent className="sm:max-w-5xl">
+        <DialogContent
+          aria-labelledby="dialog-title"
+          aria-describedby="dialog-description"
+          className="sm:max-w-5xl"
+        >
           <DialogHeader>
             <DialogTitle className="text-xl font-normal">
               Create new Variant for{' '}
               <span className="font-bold">{product}</span>{' '}
             </DialogTitle>
           </DialogHeader>
+          <DialogDescription>
+            Use this form to create a new variant for the selected product.
+          </DialogDescription>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -119,10 +127,17 @@ const FormUploadVariants = ({ dataProduct }: Props) => {
                   />
                 </div>
               </div>
-              <div>
-                <DialogFooter>
-                  <Button type="submit">Submit</Button>
-                </DialogFooter>
+              <div className="flex justify-end w-full">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  loadingIcon={
+                    <LiaTruckLoadingSolid className="animate-spin" />
+                  }
+                  className="w-40"
+                >
+                  Create
+                </Button>
               </div>
             </form>
           </Form>

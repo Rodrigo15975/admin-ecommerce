@@ -70,7 +70,7 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
                 Variant {variantIndex + 1}
               </h4>
               <Divider />
-              <div className="flex gap-2  items-center justify-end">
+              <div className="flex gap-2 flex-col items-end justify-end">
                 <p className="text-primary/80 font-medium">Choose color </p>
                 <FormField
                   key={`${variantIndex}`}

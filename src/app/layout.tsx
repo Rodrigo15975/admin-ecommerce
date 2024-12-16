@@ -9,6 +9,7 @@ import { PrimeReactProvider } from 'primereact/api'
 import 'primereact/resources/themes/soho-light/theme.css'
 import './globals.css'
 import { ConfirmPopup } from 'primereact/confirmpopup'
+import { NextUIProvider } from '@nextui-org/react'
 export const metadata: Metadata = {
   title: 'RDG Admin',
   description: 'ADMIN',
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextTopLoader
-          color="#000000"
+          color="#000009"
           initialPosition={0.08}
           crawlSpeed={200}
           height={5}
@@ -48,9 +49,11 @@ export default function RootLayout({
                 <CookieProviderClient>
                   <LazyMotion features={domAnimation}>
                     <>
-                      {children}
-                      <Toaster />
-                      <ConfirmPopup />
+                      <NextUIProvider>
+                        {children}
+                        <Toaster />
+                        <ConfirmPopup />
+                      </NextUIProvider>
                     </>
                   </LazyMotion>
                 </CookieProviderClient>

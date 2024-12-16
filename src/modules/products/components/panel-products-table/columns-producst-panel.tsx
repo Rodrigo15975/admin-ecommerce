@@ -1,52 +1,51 @@
-import ButtonActions from '@/components/buttonActions/ButtonActions'
-import { Label } from '@/components/ui/label'
 import { ColumnProps } from 'primereact/column'
-import { confirmPopup } from 'primereact/confirmpopup'
 import { Tag } from 'primereact/tag'
-import { SyntheticEvent } from 'react'
 import FormUploadVariants from '../create/form-upload-variants'
+import { Popover, PopoverTrigger } from '@nextui-org/react'
 import ColumnDeleteProduct from './columns/column-delete-product'
 import ColumnNewProduct from './columns/column-new-product'
 import { ProductVariantsDetails } from './columns/column-product-variant'
 import ColumnQuantityMin from './columns/column-quantity-min'
+import { Trash2Icon } from 'lucide-react'
+import ColumnsEditProduct from './columns/columns-edit-product'
+import { Button } from 'primereact/button'
 
 const ColumnsProductsPanel = () => {
   const DetailsVariant = (data: FindAllProducts) => (
     <ProductVariantsDetails data={data} />
   )
-
-  const deleteProduct = (e: SyntheticEvent, data: FindAllProducts) => {
-    confirmPopup({
-      target: e.currentTarget as HTMLElement,
-      message: (
-        <>
-          <Label className="font-poppins">
-            Delete Product <span className="font-bold">{data.product}</span>
-          </Label>
-        </>
-      ),
-      icon: 'pi pi-exclamation-triangle',
-      defaultFocus: 'accept',
-      footer: ({ reject }) => (
-        <ColumnDeleteProduct reject={reject} data={data} />
-      ),
-    })
+  const DeleteProduct = (data: FindAllProducts) => {
+    return (
+      <Popover showArrow backdrop={'blur'} offset={10} placement="bottom">
+        <PopoverTrigger>
+          <Button
+            tooltip="Delete"
+            tooltipOptions={{
+              position: 'top',
+            }}
+            className=" font-poppins p-2 bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-rose-300 via-red-600 rounded-full to-red-400"
+          >
+            <Trash2Icon className="text-white" />
+          </Button>
+        </PopoverTrigger>
+        <ColumnDeleteProduct data={data} />
+      </Popover>
+    )
   }
   const NewVariantProduct = (data: FindAllProducts) => (
     <FormUploadVariants dataProduct={data} />
+  )
+  const EditProduct = (data: FindAllProducts) => (
+    <ColumnsEditProduct {...data} />
   )
 
   const buttonActions = (data: FindAllProducts) => {
     return (
       <>
         <div className="space-x-4 flex items-center justify-center">
-          <ButtonActions
-            hanledDelete={(e) => deleteProduct(e, data)}
-            hanledEdit={() => {}}
-            newButton
-          >
-            <NewVariantProduct {...data} />
-          </ButtonActions>
+          <DeleteProduct {...data} />
+          <NewVariantProduct {...data} />
+          <EditProduct {...data} />
         </div>
       </>
     )

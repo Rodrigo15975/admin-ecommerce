@@ -8,4 +8,6 @@ export const useGetAllCategorys = () =>
     retry: 3, // Reintentar 3 veces
     retryDelay: 1000, // 1 segundo entre intentos
     placeholderData: keepPreviousData,
+    staleTime: 300000,
+    gcTime: 600000,
   })
