@@ -6,7 +6,7 @@ export const useGetAllRoles = () =>
   useQuery({
     queryFn: getAllRoles,
     queryKey: ['roles'],
-    staleTime: 300000,
+    // staleTime: 300000,
     gcTime: 600000,
   })
 

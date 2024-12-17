@@ -13,6 +13,11 @@ const productInventorySchema = z.object({
   ),
   stock: z.boolean(),
 })
+export const sizeSchema = z.object({
+  size: z
+    .array(z.string().min(1, 'Size is required'))
+    .min(1, 'At least one size must be selected'),
+})
 
 export const productSchema = z.object({
   product: z.string().min(1, 'Product name is required'),
@@ -22,7 +27,7 @@ export const productSchema = z.object({
   price: z.preprocess((value) => Number(value), z.number().min(0)),
   size: z
     .array(z.string().min(1, 'Size is required'))
-    .min(1, 'At least one size must be selected'), // Validación requerida
+    .min(1, 'At least one size must be selected'),
   gender: z.string().min(1, 'Gender is required'),
   brand: z.string().min(1, 'Brand is required'),
   description: z.string().nullable().optional(),

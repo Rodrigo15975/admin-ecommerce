@@ -9,6 +9,29 @@ export const deleteArhive = async (key_url: string) =>
     `${PathServices.PRODUCTS}?key=${key_url}`
   )
 
+export const deleteSize = async ({
+  id,
+  size,
+}: {
+  id: number | undefined
+  size: string
+}) =>
+  await useMethods.DELETE<HttpResponse>(
+    `${PathServices.PRODUCTS}/size/${id}/${size}`
+  )
+
+export const createSize = async ({
+  id,
+  size,
+}: {
+  id: number | undefined
+  size: string[]
+}) =>
+  await useMethods.POST<HttpResponse, string[]>(
+    `${PathServices.PRODUCTS}/size/${id}`,
+    size
+  )
+
 export const createArchiveProductVariant = async ({
   categorie,
   data,

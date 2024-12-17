@@ -12,8 +12,10 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
+import { useFindByIdProduct } from '@/modules/products/hooks/useFindByIdProduct'
 
 const ColumnsEditProduct = (data: FindAllProducts) => {
+  const { productFind } = useFindByIdProduct(data?.id)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const formProducts = useForm({
     defaultValues: {
@@ -22,6 +24,8 @@ const ColumnsEditProduct = (data: FindAllProducts) => {
   })
   const onSubmit = (dataUpdate: unknown) => {
     console.log(data, dataUpdate)
+    console.log(productFind)
+
     // const dataForm = convertToFormData(data)
     // mutateCreateProduct(dataForm, {
     //   onSuccess() {
@@ -103,303 +107,16 @@ const ColumnsEditProduct = (data: FindAllProducts) => {
                           <InputField field={field} label="Product" />
                         )}
                       />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
-                      <FormField
-                        control={formProducts.control}
-                        name={`product`}
-                        render={({ field }) => (
-                          <InputField field={field} label="Product" />
-                        )}
-                      />
                     </div>
+                    <ModalFooter>
+                      <Button onClick={onClose}>
+                        <span>Close</span>
+                      </Button>
+                      <Button type="submit">Save</Button>
+                    </ModalFooter>
                   </form>
                 </Form>
               </ModalBody>
-              <ModalFooter>
-                <Button onClick={onClose}>
-                  <span>Close</span>
-                </Button>
-                <Button type="submit">Save</Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

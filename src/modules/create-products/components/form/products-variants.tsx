@@ -7,10 +7,10 @@ import UploadFile from '@/components/upload/upload'
 import { motion } from 'framer-motion'
 import { Divider } from 'primereact/divider'
 import { useEffect } from 'react'
-import { SketchPicker } from 'react-color'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useResetStore } from '../../store/clearUpload'
 import { initialValues } from './initialValues'
+import Sketch from '@uiw/react-color-sketch'
 interface ProductVariantsProps {
   productIndex: number
 }
@@ -78,7 +78,7 @@ const ProductsVariants = ({ productIndex }: ProductVariantsProps) => {
                   name={`products.${productIndex}.productVariant.${variantIndex}.color`}
                   render={({ field }) => (
                     <>
-                      <SketchPicker
+                      <Sketch
                         key={fields[variantIndex]?.color}
                         color={field.value}
                         className="ring-1 p-1 rounded ring-primary/30"

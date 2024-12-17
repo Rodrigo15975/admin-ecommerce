@@ -14,12 +14,12 @@ import { useResetStore } from '@/modules/create-products/store/clearUpload'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BookPlusIcon } from 'lucide-react'
 import { Button as ButtonPrime } from 'primereact/button'
-import { SketchPicker } from 'react-color'
+
 import { useForm } from 'react-hook-form'
 import { useCreateArchiveProductVariant } from '../../services/mutation'
 import { ImageVariant, productVariantSchema } from './schema/schema'
 import { LiaTruckLoadingSolid } from 'react-icons/lia'
-
+import Sketch from '@uiw/react-color-sketch'
 type Props = {
   dataProduct: FindAllProducts
 }
@@ -32,7 +32,7 @@ const FormUploadVariants = ({ dataProduct }: Props) => {
   const form = useForm<ImageVariant>({
     resolver: zodResolver(productVariantSchema),
     defaultValues: {
-      color: '',
+      color: '#000',
       image: null,
     },
   })
@@ -108,18 +108,17 @@ const FormUploadVariants = ({ dataProduct }: Props) => {
                     )}
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col text-center gap-2">
                   <Label>Choose to color</Label>
                   <FormField
                     control={form.control}
                     name={`color`}
                     render={({ field }) => (
                       <>
-                        <SketchPicker
+                        <Sketch
+                          style={{ marginLeft: 20 }}
                           color={field.value}
-                          onChangeComplete={({ hex }) =>
-                            form.setValue('color', hex)
-                          }
+                          onChange={(color) => field.onChange(color.hex)}
                         />
                         <FormMessage />
                       </>

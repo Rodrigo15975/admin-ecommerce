@@ -1,7 +1,13 @@
 import { useToast } from '@/hooks/use-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
-import { createArchiveProductVariant, deleteArhive, deleteProduct } from './api'
+import {
+  createArchiveProductVariant,
+  createSize,
+  deleteArhive,
+  deleteProduct,
+  deleteSize,
+} from './api'
 export const useDeleteProduct = () => {
   const { toast } = useToast()
   const queryClient = useQueryClient()
@@ -62,6 +68,36 @@ export const useCreateArchiveProductVariant = () => {
     },
   })
 }
+export const useCreateSize = () => {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['create-product-size'],
+    mutationFn: createSize,
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({
+        queryKey: ['products'],
+        exact: true,
+      })
+      toast({
+        title: 'Created size',
+        description: data.message,
+        duration: 4000,
+        className:
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
+      })
+    },
+    onError(error: AxiosError) {
+      const response = error.response?.data as { message: string }
+      toast({
+        title: response.message,
+        description: 'Try again',
+        duration: 3000,
+        className: 'bg-gradient-to-t from-orange-100 to-orange-100',
+      })
+    },
+  })
+}
 export const useDeleteArchive = () => {
   const { toast } = useToast()
   const queryClient = useQueryClient()
@@ -76,6 +112,37 @@ export const useDeleteArchive = () => {
       })
       toast({
         title: 'Archive deleted',
+        description: data.message,
+        duration: 4000,
+        className:
+          'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
+      })
+    },
+    onError(error: AxiosError) {
+      const response = error.response?.data as { message: string }
+      toast({
+        title: response.message,
+        description: 'Try again',
+        duration: 3000,
+        className: 'bg-gradient-to-t from-orange-100 to-orange-100',
+      })
+    },
+  })
+}
+export const useDeleteSize = () => {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['delete-product-size'],
+    mutationFn: deleteSize,
+
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({
+        queryKey: ['products'],
+        exact: true,
+      })
+      toast({
+        title: 'Size deleted',
         description: data.message,
         duration: 4000,
         className:

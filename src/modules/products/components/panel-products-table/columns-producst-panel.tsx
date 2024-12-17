@@ -9,6 +9,7 @@ import ColumnQuantityMin from './columns/column-quantity-min'
 import { Trash2Icon } from 'lucide-react'
 import ColumnsEditProduct from './columns/columns-edit-product'
 import { Button } from 'primereact/button'
+import ColumnsSizeProduct from './columns/columns.size.product'
 
 const ColumnsProductsPanel = () => {
   const DetailsVariant = (data: FindAllProducts) => (
@@ -86,11 +87,11 @@ const ColumnsProductsPanel = () => {
       header: 'Price',
       sortable: true,
     },
-    // {
-    //   field: 'size',
-    //   header: 'Size',
-    //   sortable: true,
-    // },
+    {
+      field: 'size',
+      header: 'Size',
+      body: (data: FindAllProducts) => <ColumnsSizeProduct {...data} />,
+    },
     {
       field: 'gender',
       header: 'Gender',
