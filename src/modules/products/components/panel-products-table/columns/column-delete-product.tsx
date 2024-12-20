@@ -1,8 +1,7 @@
 import { Label } from '@/components/ui/label'
 import { useDeleteProduct } from '@/modules/products/services/mutation'
 import { PopoverContent } from '@nextui-org/popover'
-import { Button } from 'primereact/button'
-import { FaTruckLoading } from 'react-icons/fa'
+import { Button } from '@nextui-org/react'
 
 type Props = {
   data: FindAllProducts
@@ -24,9 +23,11 @@ const ColumnDeleteProduct = ({ data }: Props) => {
           <div className="flex justify-between p-2 font-poppins">
             <Button
               disabled={isPending}
-              loading={isPending}
-              loadingIcon={<FaTruckLoading className="animate-spin" />}
-              onClick={deleteProduct}
+              isLoading={isPending}
+              variant="shadow"
+              color="danger"
+              onPress={deleteProduct}
+              // onClick={deleteProduct}
             >
               Delete
             </Button>

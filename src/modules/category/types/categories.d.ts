@@ -1,4 +1,5 @@
 interface Categories {
+  label: ReactNode
   id: number
   category: string
   discountRules?: {
