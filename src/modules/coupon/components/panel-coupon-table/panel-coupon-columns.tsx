@@ -1,20 +1,20 @@
-import ButtonActions from '@/components/buttonActions/ButtonActions'
+// import ButtonActions from '@/components/buttonActions/ButtonActions'
 import { ColumnProps } from 'primereact/column'
 
 const ColumnsCouponPanel = () => {
-  const buttonActions = () => {
-    return (
-      <>
-        <div className="space-x-4">
-          <ButtonActions
-            isPendingDisabledDelete={false}
-            hanledDelete={() => {}}
-            hanledEdit={() => {}}
-          />
-        </div>
-      </>
-    )
-  }
+  // const buttonActions = () => {
+  //   return (
+  //     <>
+  //       <div className="space-x-4">
+  //         <ButtonActions
+  //           isPendingDisabledDelete={false}
+  //           hanledDelete={() => {}}
+  //           hanledEdit={() => {}}
+  //         />
+  //       </div>
+  //     </>
+  //   )
+  // }
 
   const columns: ColumnProps[] = [
     {

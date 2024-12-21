@@ -9,4 +9,6 @@ export const useGetAllProducts = () =>
     retry: 3, // Reintentar 3 veces
     staleTime: 300000,
     gcTime: 600000,
+    retryDelay: 2000,
+    networkMode: 'online',
   })
