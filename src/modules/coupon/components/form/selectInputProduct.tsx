@@ -1,12 +1,6 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Control } from "react-hook-form"
+import { FormField } from '@/components/ui/form'
+import { Control } from 'react-hook-form'
+import SelectAllProducts from '../select-all-products/selectAllProducts'
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<CreateCoupon, any>
@@ -16,20 +10,9 @@ const SelectInputProduct = ({ control }: Props) => {
     <>
       <FormField
         control={control}
-        name={"productId"}
+        name={'product'}
         render={({ field }) => (
-          <FormItem className="w-full max-sm:w-full max-sm:text-start">
-            <FormLabel className="text-primary/60">{"Product"}</FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                disabled
-                value={String(field.value)}
-                className="focus:bg-white text-primary font-medium border-none outline-none shadow transition-all rounded w-full border-b bg-secondary"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <SelectAllProducts field={field} label="Product" />
         )}
       />
     </>

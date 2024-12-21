@@ -1,8 +1,8 @@
 export const initialValues: CreateCoupon = {
   discount: 0,
-  code: "",
-  espiryDate: "",
+  code: '',
+  espiryDate: '',
   isGlobal: false,
   isNew: true,
-  productId: "",
+  product: '',
 }

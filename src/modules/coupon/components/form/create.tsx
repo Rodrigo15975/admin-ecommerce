@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Button as ButtonPrime } from 'primereact/button'
 import {
   DialogContent,
   DialogDescription,
@@ -16,20 +15,23 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { useState } from 'react'
-import { UseFormReturn } from 'react-hook-form'
-import { AiOutlineLoading } from 'react-icons/ai'
-import { storeEditcoupon } from '../../store/storeEditCoupon'
 import { Code2Icon } from 'lucide-react'
-import { generateCouponCode } from '../../utils/generateCodeCoupon'
-import { formInputCoupon } from '../../utils/inputFormCoupon'
-import SelectInputProduct from './selectInputProduct'
+import { Button as ButtonPrime } from 'primereact/button'
 import {
   InputNumber,
   InputNumberValueChangeEvent,
 } from 'primereact/inputnumber'
+import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Nullable } from 'primereact/ts-helpers'
+import { useState } from 'react'
+import { UseFormReturn } from 'react-hook-form'
+import { AiOutlineLoading } from 'react-icons/ai'
+import { storeEditcoupon } from '../../store/storeEditCoupon'
+import { generateCouponCode } from '../../utils/generateCodeCoupon'
+import { formInputCoupon } from '../../utils/inputFormCoupon'
+import SelectInputProduct from './selectInputProduct'
+import { useCreateCoupon } from '../../services/mutation'
+import { convertedDateISO } from '@/utils/formatDateIso8601'
 type Props = {
   handleDialogClose: () => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,17 +39,30 @@ type Props = {
 }
 
 const Create = ({ form, handleDialogClose }: Props) => {
+  const { mutate: mutateCreating, isPending: isPendingCreated } =
+    useCreateCoupon()
   const options: string[] = ['Yes', 'No']
   const [couponISGlobal, setCouponGlobal] = useState<boolean>(false)
   const { id } = storeEditcoupon()
   const [discount, setDiscount] = useState<Nullable<number>>(0)
   const onSubmit = (data: CreateCoupon) => {
-    console.log({ ...data, discount })
-    handleDialogClose()
-    form.reset()
-    setCouponGlobal(false)
-    setDiscount(0)
+    const { espiryDate, isGlobal } = data
+    const dateIso = convertedDateISO(espiryDate)
+    if (isGlobal) data.product = ''
+
+    mutateCreating(
+      { ...data, discount: Number(discount), espiryDate: dateIso },
+      {
+        onSuccess: () => {
+          handleDialogClose()
+          form.reset()
+          setCouponGlobal(false)
+          setDiscount(0)
+        },
+      }
+    )
   }
+  const isLoading = isPendingCreated
 
   const generateCode = () => {
     const code = generateCouponCode()
@@ -121,6 +136,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
                 onValueChange={(e: InputNumberValueChangeEvent) =>
                   setDiscount(e.value)
                 }
+                prefix="%"
                 mode="decimal"
                 min={0}
                 max={100}
@@ -148,7 +164,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
                       }}
                       pt={{
                         button: {
-                          className: 'w-full border space-y-4 ',
+                          className: 'w-full border space-y-4 bg-primary/10',
                         },
                       }}
                       options={options}
@@ -186,7 +202,8 @@ const Create = ({ form, handleDialogClose }: Props) => {
           <DialogFooter>
             <Button
               loadingIcon={<AiOutlineLoading className="animate-spin" />}
-              // disabled={pendingCreate || pendingUpdate}
+              disabled={isLoading}
+              loading={isLoading}
               type="submit"
               variant={'default'}
             >

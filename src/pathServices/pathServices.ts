@@ -12,4 +12,5 @@ export const enum PathServices {
   CATEGORIESDISCOUNT = '/category/discount',
   PRODUCTS = '/products',
   FILES = '/files',
+  COUPON = '/coupon',
 }
