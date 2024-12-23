@@ -1,5 +1,5 @@
-import { useMethods } from "@/adapters/methods"
-import { PathServices } from "@/pathServices/pathServices"
+import { useMethods } from '@/adapters/methods'
+import { PathServices } from '@/pathServices/pathServices'
 
 export const updateUpdate = async (data: UpdateUser) =>
   await useMethods.PATCH<HttpResponse, UpdateUser>(
@@ -9,9 +9,6 @@ export const updateUpdate = async (data: UpdateUser) =>
 
 export const createUser = async (data: CreateUser) =>
   await useMethods.POST<HttpResponse, CreateUser>(`${PathServices.USER}`, data)
-
-export const getOneUser = async (id: number | undefined) =>
-  await useMethods.GET<User>(`${PathServices.URL}${PathServices.USER}/${id}`)
 
 export const getProfileUser = async () =>
   await useMethods.GET<User>(`${PathServices.USER}${PathServices.PROFILE}`)

@@ -1,7 +1,7 @@
-import { FormProvider, useForm } from "react-hook-form"
+import { FormProvider, useForm } from 'react-hook-form'
 
 export function FormLayout({ children }: { children: React.ReactNode }) {
-  const methods = useForm() 
+  const methods = useForm()
 
   return <FormProvider {...methods}>{children}</FormProvider>
 }

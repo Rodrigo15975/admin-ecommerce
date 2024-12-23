@@ -1,15 +1,16 @@
-"use client"
-import { storeOpenDialogForm } from "@/utils/storeOpenDialogForm"
-import { formSchemaCoupon, initialValues, storeEditcoupon } from "../../index"
-import { zodResolver } from "@hookform/resolvers/zod"
-import Create from "./create"
-import { Form as FormCreate } from "@/components/ui/form"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import { useForm } from "react-hook-form"
+'use client'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Form as FormCreate } from '@/components/ui/form'
+import { storeOpenDialogForm } from '@/utils/storeOpenDialogForm'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { formSchemaCoupon, initialValues, storeEditcoupon } from '../../index'
+import Create from './create'
 
 const Form = () => {
   const { setIsOpenDialogForm, isOpenDialogForm } = storeOpenDialogForm()
   const { setId } = storeEditcoupon()
+
   const form = useForm<CreateCoupon>({
     resolver: zodResolver(formSchemaCoupon),
     defaultValues: initialValues,

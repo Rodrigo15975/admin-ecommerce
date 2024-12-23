@@ -1,13 +1,16 @@
 import { useMethods } from '@/adapters/methods'
 import { PathServices } from '@/pathServices/pathServices'
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 export const useGetAllRoles = () =>
   useQuery({
     queryFn: getAllRoles,
     queryKey: ['roles'],
-    // staleTime: 300000,
-    gcTime: 600000,
+    staleTime: 600000, // 10 minutos
+    gcTime: 1200000, // 20 minutos
+    retry: 3,
+    retryDelay: 2000,
+    placeholderData: keepPreviousData,
   })
 
 const getAllRoles = async () =>

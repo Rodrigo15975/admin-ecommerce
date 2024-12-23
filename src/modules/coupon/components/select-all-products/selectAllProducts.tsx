@@ -29,6 +29,8 @@ const SelectAllProducts = ({ field, label }: Props) => {
         <FormLabel className="text-primary/60 text-[16px]">{label}</FormLabel>
         <FormControl>
           <Select
+            defaultValue={field.value}
+            name="product"
             value={String(field.value)}
             onValueChange={(value) => field.onChange(value)}
           >

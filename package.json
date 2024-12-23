@@ -31,6 +31,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
     "framer-motion": "^11.14.4",
     "input-otp": "^1.2.4",
     "jwt-decode": "^4.0.0",

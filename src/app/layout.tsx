@@ -44,21 +44,20 @@ export default function RootLayout({
               }
             }
           >
-            <SidebarHandler>
-              <AnimatePresence>
-                <CookieProviderClient>
-                  <LazyMotion features={domAnimation}>
-                    <>
-                      <NextUIProvider>
-                        {children}
-                        <Toaster />
-                        <ConfirmPopup />
-                      </NextUIProvider>
-                    </>
-                  </LazyMotion>
-                </CookieProviderClient>
-              </AnimatePresence>
-            </SidebarHandler>
+            <AnimatePresence>
+              <CookieProviderClient>
+                <LazyMotion features={domAnimation}>
+                  <>
+                    <NextUIProvider>
+                      <SidebarHandler />
+                      {children}
+                      <Toaster />
+                      <ConfirmPopup />
+                    </NextUIProvider>
+                  </>
+                </LazyMotion>
+              </CookieProviderClient>
+            </AnimatePresence>
           </PrimeReactProvider>
         </QueryProvides>
       </body>

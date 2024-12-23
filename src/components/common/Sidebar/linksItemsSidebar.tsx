@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, MenuItem, MenuItemStyles } from 'react-pro-sidebar'
 import { linksBusiness, linksGeneral } from './linkSidebar'
+import Link from 'next/link'
 
 const LinksItemsSidebar = () => {
   const pathName = usePathname()
@@ -23,24 +23,23 @@ const LinksItemsSidebar = () => {
   }
 
   const renderClassName = (pathName: string, path: string) => pathName === path
-
+  const buttonLink = (path: string) => (
+    <Link
+      className={`w-full ${
+        renderClassName(pathName, path) && 'bg-primary/10 !text-primary'
+      }  `}
+      href={path}
+    />
+  )
   return (
     <>
       <Menu menuItemStyles={menuItemStyles}>
         <p className="mb-2 px-2 text-neutral-400 font-medium">General</p>
-        {linksGeneral.map((link, index) => (
+        {linksGeneral.map((link) => (
           <MenuItem
             icon={link.icon}
-            component={
-              <Link
-                className={`w-full ${
-                  renderClassName(pathName, link.path) &&
-                  'bg-primary/10 !text-primary'
-                }  `}
-                href={link.path}
-              ></Link>
-            }
-            key={index}
+            component={buttonLink(link.path)}
+            key={Math.random()}
             className={`font-semibold flex text-primary ${
               renderClassName(pathName, link.path) && '!text-slate-50'
             }  `}
@@ -49,18 +48,11 @@ const LinksItemsSidebar = () => {
           </MenuItem>
         ))}
         <p className="mb-2 px-2 mt-4 text-neutral-400 font-medium ">Business</p>
-        {linksBusiness.map((link, index) => (
+        {linksBusiness.map((link) => (
           <MenuItem
             icon={link.icon}
-            component={
-              <Link
-                className={`w-full ${
-                  renderClassName(pathName, link.path) && 'bg-primary/10'
-                }  `}
-                href={link.path}
-              ></Link>
-            }
-            key={index}
+            component={buttonLink(link.path)}
+            key={Math.random()}
             className={`font-semibold flex text-[1rem] text-primary ${
               renderClassName(pathName, link.path) && '!text-primary'
             }  `}

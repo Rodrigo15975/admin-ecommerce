@@ -5,9 +5,16 @@ interface Coupon {
   isGlobal: boolean
   isNew: boolean
   espiryDate: string
+  createdAt?: string
+  updatedAt?: string
 }
 
-interface GetAllCoupons extends Coupon {}
+interface FindAllCoupons extends Coupon {
+  products: {
+    id: number
+    product: string
+  }
+}
 
 interface CreateCoupon extends Coupon {
   product: number | undefined | string

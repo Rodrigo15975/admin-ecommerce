@@ -6,7 +6,7 @@ import { config } from '@/middleware'
 export default function SidebarHandler({
   children,
 }: {
-  children: React.ReactNode
+  children?: React.ReactNode
 }) {
   const pathname = usePathname()
 

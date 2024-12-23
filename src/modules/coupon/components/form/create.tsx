@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { convertedDateISO } from '@/utils/formatDateIso8601'
 import { Code2Icon } from 'lucide-react'
 import { Button as ButtonPrime } from 'primereact/button'
 import {
@@ -22,16 +23,20 @@ import {
   InputNumberValueChangeEvent,
 } from 'primereact/inputnumber'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { Nullable } from 'primereact/ts-helpers'
-import { useState } from 'react'
+// import { Nullable } from 'primereact/ts-helpers'
+import { convertToInputDateFormat } from '@/utils/format-dayjs'
+import { DatePicker } from 'antd'
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
+import { useOneFindCoupon } from '../../hooks/useFindCoupon'
+import { useCreateCoupon } from '../../services/mutation'
 import { storeEditcoupon } from '../../store/storeEditCoupon'
 import { generateCouponCode } from '../../utils/generateCodeCoupon'
 import { formInputCoupon } from '../../utils/inputFormCoupon'
 import SelectInputProduct from './selectInputProduct'
-import { useCreateCoupon } from '../../services/mutation'
-import { convertedDateISO } from '@/utils/formatDateIso8601'
+
 type Props = {
   handleDialogClose: () => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,35 +44,59 @@ type Props = {
 }
 
 const Create = ({ form, handleDialogClose }: Props) => {
+  const options: string[] = ['Yes', 'No']
   const { mutate: mutateCreating, isPending: isPendingCreated } =
     useCreateCoupon()
-  const options: string[] = ['Yes', 'No']
-  const [couponISGlobal, setCouponGlobal] = useState<boolean>(false)
+  const isLoading = isPendingCreated
   const { id } = storeEditcoupon()
-  const [discount, setDiscount] = useState<Nullable<number>>(0)
+  const findOneCoupon = useOneFindCoupon(id)
+
   const onSubmit = (data: CreateCoupon) => {
     const { espiryDate, isGlobal } = data
     const dateIso = convertedDateISO(espiryDate)
     if (isGlobal) data.product = ''
 
+    if (id) {
+      console.log({ ...data, dateIso })
+      return
+    }
+    console.log({ ...data, dateIso })
+
+    return
     mutateCreating(
-      { ...data, discount: Number(discount), espiryDate: dateIso },
+      { ...data, espiryDate: dateIso },
       {
         onSuccess: () => {
           handleDialogClose()
           form.reset()
-          setCouponGlobal(false)
-          setDiscount(0)
+          // setCouponGlobal(false)
+          // setDiscount(0)
         },
       }
     )
   }
-  const isLoading = isPendingCreated
 
   const generateCode = () => {
     const code = generateCouponCode()
     form.setValue('code', code)
   }
+
+  useEffect(() => {
+    if (id && findOneCoupon) {
+      const { code, discount, espiryDate, isGlobal, product } = findOneCoupon
+
+      const dateConverted = convertToInputDateFormat(espiryDate)
+
+      form.setValue('code', code)
+      form.setValue('discount', discount)
+      form.setValue('espiryDate', dateConverted)
+      form.setValue('isGlobal', isGlobal)
+      form.setValue('product', String(product))
+      return
+    } else {
+      form.reset()
+    }
+  }, [id, findOneCoupon, form])
 
   return (
     <>
@@ -75,7 +104,7 @@ const Create = ({ form, handleDialogClose }: Props) => {
         <div className=" max-h-[40vh] ">
           <DialogHeader>
             <DialogTitle className="md:text-4xl  text-2xl text-primary/90">
-              {id ? 'Updated Categorie ' : 'New Coupon'}
+              {id ? 'Updated Coupon ' : 'New Coupon'}
             </DialogTitle>
             <DialogDescription className="">
               {id
@@ -88,7 +117,9 @@ const Create = ({ form, handleDialogClose }: Props) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col justify-between space-y-4 min-h-[20rem]"
         >
-          {!couponISGlobal && <SelectInputProduct control={form.control} />}
+          {!form.getValues().isGlobal && (
+            <SelectInputProduct control={form.control} />
+          )}
           <div className="flex gap-2 items-end">
             {formInputCoupon.slice(0, 1).map((input, index) => (
               <FormField
@@ -114,32 +145,47 @@ const Create = ({ form, handleDialogClose }: Props) => {
                 )}
               />
             ))}
-            <ButtonPrime
-              tooltip="Generate Coupon Code"
-              type="button"
-              color="secondary"
-              onClick={generateCode}
-              severity="secondary"
-              icon={<Code2Icon />}
-              className="flex-[0_1_5rem] h-10 border bg-secondary"
-            />
+            {!id && (
+              <ButtonPrime
+                tooltip="Generate Coupon Code"
+                type="button"
+                color="secondary"
+                onClick={generateCode}
+                severity="secondary"
+                icon={<Code2Icon />}
+                className="flex-[0_1_5rem] h-10 border bg-secondary"
+              />
+            )}
           </div>
           {formInputCoupon.slice(1, 2).map((input, index) => (
             <div key={index} className="flex-col flex gap-2 items-start">
-              <FormLabel className="text-primary/60">{input.text}</FormLabel>
-
-              <InputNumber
-                inputId="minmax-buttons"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                value={discount}
-                type={input.type}
-                onValueChange={(e: InputNumberValueChangeEvent) =>
-                  setDiscount(e.value)
-                }
-                prefix="%"
-                mode="decimal"
-                min={0}
-                max={100}
+              <FormField
+                key={index}
+                control={form.control}
+                name={input.name}
+                render={({ field }) => (
+                  <FormItem className="w-full max-sm:w-full max-sm:text-start">
+                    <FormLabel className="text-primary/60">
+                      {input.text}
+                    </FormLabel>
+                    <FormControl>
+                      <InputNumber
+                        inputId="minmax-buttons"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                        value={Number(field.value)}
+                        type={input.type}
+                        onValueChange={(e: InputNumberValueChangeEvent) =>
+                          field.onChange(e.value)
+                        }
+                        prefix="%"
+                        mode="decimal"
+                        min={0}
+                        max={100}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           ))}
@@ -156,15 +202,19 @@ const Create = ({ form, handleDialogClose }: Props) => {
                   <FormControl>
                     <SelectButton
                       {...field}
-                      value={couponISGlobal ? 'Yes' : 'No'}
+                      disabled={!!id}
+                      value={field.value ? 'Yes' : 'No'}
                       onChange={(e: SelectButtonChangeEvent) => {
                         const selectedValue = e.value === 'Yes'
-                        setCouponGlobal(selectedValue)
+                        // setCouponGlobal(selectedValue)
                         field.onChange(selectedValue)
                       }}
+                      name={input.name}
                       pt={{
                         button: {
-                          className: 'w-full border space-y-4 bg-primary/10',
+                          className: `w-full border space-y-4 bg-primary/10 ${
+                            id && 'cursor-not-allowed'
+                          } `,
                         },
                       }}
                       options={options}
@@ -175,7 +225,6 @@ const Create = ({ form, handleDialogClose }: Props) => {
               )}
             />
           ))}
-
           {formInputCoupon.slice(4, 5).map((input, index) => (
             <FormField
               key={index}
@@ -187,11 +236,19 @@ const Create = ({ form, handleDialogClose }: Props) => {
                     {input.text}
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type={input.type}
-                      value={String(field.value)} // Asegura que el valor es un string
-                      className="focus:bg-white text-primary font-medium border-none outline-none shadow transition-all rounded w-full border-b bg-secondary"
+                    <DatePicker
+                      format="YYYY-MM-DD"
+                      value={
+                        field.value && typeof field.value === 'string'
+                          ? dayjs(field.value, 'YYYY-MM-DD')
+                          : undefined
+                      }
+                      // defaultValue={
+                      //   field.value && typeof field.value === 'string'
+                      //     ? dayjs(field.value, 'YYYY-MM-DD')
+                      //     : undefined
+                      // }
+                      onChange={(_, dateString) => field.onChange(dateString)}
                     />
                   </FormControl>
                   <FormMessage />
