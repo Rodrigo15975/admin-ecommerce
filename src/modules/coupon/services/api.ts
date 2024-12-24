@@ -11,3 +11,9 @@ export const createCoupon = async (data: CreateCoupon) =>
   )
 export const deleteCoupon = async (id: number | undefined) =>
   await useMethods.DELETE<HttpResponse>(`${PathServices.COUPON}/${id}`)
+
+export const updateCoupon = async (data: UpdateCoupon) =>
+  await useMethods.PATCH<HttpResponse, UpdateCoupon>(
+    `${PathServices.COUPON}`,
+    data
+  )

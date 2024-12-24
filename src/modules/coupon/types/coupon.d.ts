@@ -19,3 +19,5 @@ interface FindAllCoupons extends Coupon {
 interface CreateCoupon extends Coupon {
   product: number | undefined | string
 }
+
+interface UpdateCoupon extends CreateCoupon {}

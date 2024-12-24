@@ -1,3 +1,4 @@
+import ButtonDelete from '@/components/ui/button-delete'
 import {
   convertedDayRest,
   convertedYearMonthDay,
@@ -6,16 +7,10 @@ import { Badge, Button } from '@nextui-org/react'
 import { ColumnProps } from 'primereact/column'
 import { Tag } from 'primereact/tag'
 import { useDeleteCoupon } from '../../services/mutation'
-import ButtonDelete from '@/components/ui/button-delete'
-import { storeEditcoupon } from '../../store'
-import { Button as ButtonPrime } from 'primereact/button'
-import { Edit2 } from 'lucide-react'
-import { storeOpenDialogForm } from '@/utils/storeOpenDialogForm'
+import FormUpdateCoupon from '../form/form-update-coupon'
 
 const ColumnsCouponPanel = () => {
   const { mutate: deleteCoupon, isPending: isPendingCoupon } = useDeleteCoupon()
-  const { setId } = storeEditcoupon()
-  const { setIsOpenDialogForm } = storeOpenDialogForm()
   const dateExpiration = (data: FindAllCoupons) => {
     const dayRest = convertedDayRest(data.espiryDate)
     const isExpired = dayRest === 'Expired' && 'bg-yellow-300'
@@ -32,13 +27,9 @@ const ColumnsCouponPanel = () => {
       </>
     )
   }
+  const EditForm = (data: FindAllCoupons) => <FormUpdateCoupon {...data} />
 
   const buttonActions = (data: FindAllCoupons) => {
-    const openFormEdit = () => {
-      setId(data.id)
-      setIsOpenDialogForm()
-    }
-
     return (
       <>
         <ButtonDelete
@@ -46,17 +37,7 @@ const ColumnsCouponPanel = () => {
           id={data.id}
           isPending={isPendingCoupon}
         />
-        <ButtonPrime
-          tooltip="Edit"
-          disabled={isPendingCoupon}
-          tooltipOptions={{
-            position: 'top',
-          }}
-          onClick={openFormEdit}
-          className="rounded-full ml-2 font-poppins p-2 border shadow"
-        >
-          <Edit2 className="text-green-400" />
-        </ButtonPrime>
+        <EditForm {...data} />
       </>
     )
   }

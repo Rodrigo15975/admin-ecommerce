@@ -23,14 +23,10 @@ import {
   InputNumberValueChangeEvent,
 } from 'primereact/inputnumber'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-// import { Nullable } from 'primereact/ts-helpers'
-import { convertToInputDateFormat } from '@/utils/format-dayjs'
 import { DatePicker } from 'antd'
 import dayjs from 'dayjs'
-import { useEffect } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
-import { useOneFindCoupon } from '../../hooks/useFindCoupon'
 import { useCreateCoupon } from '../../services/mutation'
 import { storeEditcoupon } from '../../store/storeEditCoupon'
 import { generateCouponCode } from '../../utils/generateCodeCoupon'
@@ -49,28 +45,18 @@ const Create = ({ form, handleDialogClose }: Props) => {
     useCreateCoupon()
   const isLoading = isPendingCreated
   const { id } = storeEditcoupon()
-  const findOneCoupon = useOneFindCoupon(id)
 
   const onSubmit = (data: CreateCoupon) => {
     const { espiryDate, isGlobal } = data
     const dateIso = convertedDateISO(espiryDate)
     if (isGlobal) data.product = ''
 
-    if (id) {
-      console.log({ ...data, dateIso })
-      return
-    }
-    console.log({ ...data, dateIso })
-
-    return
     mutateCreating(
       { ...data, espiryDate: dateIso },
       {
         onSuccess: () => {
           handleDialogClose()
           form.reset()
-          // setCouponGlobal(false)
-          // setDiscount(0)
         },
       }
     )
@@ -80,23 +66,6 @@ const Create = ({ form, handleDialogClose }: Props) => {
     const code = generateCouponCode()
     form.setValue('code', code)
   }
-
-  useEffect(() => {
-    if (id && findOneCoupon) {
-      const { code, discount, espiryDate, isGlobal, product } = findOneCoupon
-
-      const dateConverted = convertToInputDateFormat(espiryDate)
-
-      form.setValue('code', code)
-      form.setValue('discount', discount)
-      form.setValue('espiryDate', dateConverted)
-      form.setValue('isGlobal', isGlobal)
-      form.setValue('product', String(product))
-      return
-    } else {
-      form.reset()
-    }
-  }, [id, findOneCoupon, form])
 
   return (
     <>
@@ -231,23 +200,24 @@ const Create = ({ form, handleDialogClose }: Props) => {
               control={form.control}
               name={input.name}
               render={({ field }) => (
-                <FormItem className="w-full max-sm:w-full max-sm:text-start">
+                <FormItem className="w-full flex flex-col max-sm:w-full max-sm:text-start">
                   <FormLabel className="text-primary/60">
                     {input.text}
                   </FormLabel>
                   <FormControl>
                     <DatePicker
                       format="YYYY-MM-DD"
+                      className="p-3"
                       value={
                         field.value && typeof field.value === 'string'
                           ? dayjs(field.value, 'YYYY-MM-DD')
                           : undefined
                       }
-                      // defaultValue={
-                      //   field.value && typeof field.value === 'string'
-                      //     ? dayjs(field.value, 'YYYY-MM-DD')
-                      //     : undefined
-                      // }
+                      defaultValue={
+                        field.value && typeof field.value === 'string'
+                          ? dayjs(field.value, 'YYYY-MM-DD')
+                          : undefined
+                      }
                       onChange={(_, dateString) => field.onChange(dateString)}
                     />
                   </FormControl>
