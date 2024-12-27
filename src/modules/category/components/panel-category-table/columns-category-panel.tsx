@@ -6,6 +6,7 @@ import { useDeleteCategorie } from '../../services/mutation'
 import { storeCreateDiscountCategorie, storeEditCategorie } from '../../store'
 import { Button } from 'primereact/button'
 import { BookDown } from 'lucide-react'
+import { convertedDayRest } from '@/utils/formatDateIso8601'
 
 const ColumnsCategoryPanel = () => {
   const { setId } = storeEditCategorie()
@@ -68,6 +69,37 @@ const ColumnsCategoryPanel = () => {
     )
   }
 
+  const dateLimite = (data: Categories) => {
+    const { discountRules } = data
+
+    if (discountRules && discountRules.length > 0) {
+      const { end_date, start_date } = discountRules[0]
+      if (!end_date || !start_date) return
+      const dateStart = new Date(start_date).toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+      const dateEnd = new Date(end_date).toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+
+      return (
+        <div className="flex gap-2 items-center justify-center">
+          <span>{dateStart}</span>
+          <div
+            className={`h-4 w-4 rounded-full shadow ${
+              discountRules[0].is_active && 'bg-green-300'
+            } `}
+          ></div>
+          <span>{dateEnd}</span>
+        </div>
+      )
+    }
+  }
+
   const discountRules = (data: Categories) => {
     const { discountRules } = data
 
@@ -84,6 +116,19 @@ const ColumnsCategoryPanel = () => {
       )
     }
   }
+  const dayRest = (data: Categories) => {
+    const { discountRules = [] } = data
+
+    if (discountRules && discountRules.length > 0) {
+      const { end_date } = discountRules[0]
+      const dayRest = convertedDayRest(end_date)
+      return (
+        <div className="flex gap-2 items-center justify-center">
+          <span>{dayRest}</span>
+        </div>
+      )
+    }
+  }
 
   const columns: ColumnProps[] = [
     {
@@ -95,6 +140,17 @@ const ColumnsCategoryPanel = () => {
       header: 'Discount rule all categorie',
       sortable: true,
       body: (data: Categories) => discountRules(data),
+    },
+
+    {
+      header: 'Discount date limit',
+      field: 'discountRules[0].end_date',
+      sortable: true,
+      body: (data: Categories) => dateLimite(data),
+    },
+    {
+      header: 'Days rest discount',
+      body: (data: Categories) => dayRest(data),
     },
 
     {
