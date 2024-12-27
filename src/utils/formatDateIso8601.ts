@@ -1,4 +1,5 @@
 import { parseISO, format, formatDistanceToNow, isBefore } from 'date-fns'
+import dayjs from 'dayjs'
 
 export function convertedDateISO(date: string): string {
   const parsedStartDate = parseISO(date).toISOString()
@@ -6,8 +7,10 @@ export function convertedDateISO(date: string): string {
 }
 
 export const convertedYearMonthDay = (date: string): string => {
-  const parsedDate = parseISO(date) // Convierte el string a un objeto Date
-  return format(parsedDate, 'yyyy-MM-dd') // Formatea la fecha como 'año-mes-día'
+  // const parsedDate = parseISO(date) // Convierte el string a un objeto Date
+  // return format(parsedDate, 'YYYY-MM-DD') // Formatea la fecha como 'año-mes-día'
+  // Convierte el string a un objeto Day.js y formatea la fecha
+  return dayjs(date).format('YYYY-MM-DD')
 }
 
 export const convertedDayMonthYear = (date: string): string => {

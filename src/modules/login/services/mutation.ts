@@ -15,7 +15,7 @@ export const useAuth = () => {
       const { auth } = data
       if (auth) {
         setCookie('auth', auth)
-        router.push('/dashboard') // Asegúrate de que el `push` se ejecute
+        router.push('/dashboard')
       }
     },
     onError(error: AxiosError<{ message: string }>) {

@@ -14,6 +14,7 @@ const ColumnsCouponPanel = () => {
   const dateExpiration = (data: FindAllCoupons) => {
     const dayRest = convertedDayRest(data.espiryDate)
     const isExpired = dayRest === 'Expired' && 'bg-yellow-300'
+    const dateFormated = convertedYearMonthDay(data?.espiryDate)
     return (
       <>
         <Badge color="secondary" className="flex items-center">
@@ -21,7 +22,7 @@ const ColumnsCouponPanel = () => {
           <div
             className={`${isExpired} text-xs flex items-center mx-2 ring-1 ring-primary px-2 rounded-full`}
           >
-            {convertedYearMonthDay(data.espiryDate)}
+            {dateFormated}
           </div>
         </Badge>
       </>

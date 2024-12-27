@@ -66,13 +66,17 @@ export const useUpdateCoupon = () => {
     mutationKey: ['update-coupon'],
     mutationFn: updateCoupon,
     async onMutate(updateCoupon) {
+      const { id } = updateCoupon
       await queryClient.cancelQueries({
         queryKey: ['coupons'],
       })
-      const previousCouponUpdate = queryClient.getQueryData(['coupons'])
+      const previousCouponUpdate = queryClient.getQueryData<UpdateCoupon[]>([
+        'coupons',
+      ])
+
       queryClient.setQueryData<UpdateCoupon[]>(['coupons'], (oldCoupons) =>
         oldCoupons?.map((coupon) =>
-          coupon.id === updateCoupon.id ? updateCoupon : coupon
+          coupon.id === id ? { ...coupon, ...updateCoupon } : coupon
         )
       )
       return {

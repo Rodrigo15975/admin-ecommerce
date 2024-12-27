@@ -49,8 +49,15 @@ const FormUpdateCoupon = (data: FindAllCoupons) => {
 
   const onSubmit = (data: UpdateCoupon) => {
     const { isGlobal } = data
-    if (isGlobal) data.product = ''
-    mutateUpdate(data)
+    if (isGlobal) data.product = null
+    console.log(data)
+    // return
+    // const formattedDate = dayjs(data.espiryDate).format('YYYY-MM-DD')
+    mutateUpdate(data, {
+      onSuccess: () => {
+        onClose()
+      },
+    })
   }
 
   useEffect(() => {
