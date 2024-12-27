@@ -38,19 +38,24 @@ const Create = () => {
   const { fields, append, remove } = useFieldArray({
     control: formProducts.control,
     name: 'products',
+    keyName: 'id',
   })
+  const watchLenght = fields.length
+  const disabledButtonMaxForm = watchLenght === 2
+  const disabledButtonMinxForm = watchLenght === 1
 
   const incrementReset = useResetStore((state) => state.incrementReset)
-  const disabledButtonMaxForm = formProducts.getValues().products.length === 2
-  const appendProduct = () => append(initialValues.products)
+  const appendProduct = () => append({ ...initialValues.products[0] })
   const removeProduct = (index: number) => remove(index)
+
   const onSubmit = (data: InitialValuesProduct) => {
     const dataForm = convertToFormData(data)
     mutateCreateProduct(dataForm, {
       onSuccess() {
-        formProducts.reset()
+        formProducts.reset(initialValues)
         formProducts.setValue('products', initialValues.products)
         formProducts.clearErrors()
+        formProducts.resetField('products')
         incrementReset()
       },
     })
@@ -66,13 +71,13 @@ const Create = () => {
           <section className="flex md:gap-8  max-xl:flex-col-reverse">
             <div className="flex-auto ring-1 max-md:space-y-4 max-md:ring-0 max-md:shadow-none ring-primary/10 bg-white rounded md:px-16 md:py-8 shadow-md">
               <AnimatePresence>
-                {fields.map((_, productIndex) => (
+                {fields.map((fieldData, productIndex) => (
                   <motion.div
                     variants={productAnimation}
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    key={productIndex}
+                    key={fieldData.id}
                   >
                     <h4 className="mb-10 max-md:my-10 flex gap-2 items-center pb-2 border-b text-3xl text-primary/90 font-medium">
                       Create Product {productIndex + 1} <ListTodoIcon />
@@ -245,10 +250,8 @@ const Create = () => {
                         title="Remove"
                         type="button"
                         className="my-8"
-                        disabled={
-                          formProducts.getValues().products.length === 1
-                        }
-                        onClick={() => removeProduct(productIndex)}
+                        disabled={disabledButtonMinxForm}
+                        onClick={() => removeProduct(fieldData.id)}
                       />
                     </div>
                   </motion.div>

@@ -47,7 +47,6 @@ export const useLogout = () => {
       }
     },
     onError(error: AxiosError) {
-      console.log(error)
       toast({
         title: 'Error al cerrar sesión',
         'aria-activedescendant': error.message,

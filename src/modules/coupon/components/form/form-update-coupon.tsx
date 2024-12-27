@@ -24,15 +24,14 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react'
+import dayjs from 'dayjs'
 import {
   InputNumber,
   InputNumberValueChangeEvent,
 } from 'primereact/inputnumber'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import dayjs from 'dayjs'
 import { useEffect } from 'react'
 import { useUpdateCoupon } from '../../services/mutation'
-import { convertedDateISO } from '@/utils/formatDateIso8601'
 
 const FormUpdateCoupon = (data: FindAllCoupons) => {
   const { id } = data
@@ -49,12 +48,9 @@ const FormUpdateCoupon = (data: FindAllCoupons) => {
   })
 
   const onSubmit = (data: UpdateCoupon) => {
-    const { isGlobal, espiryDate } = data
+    const { isGlobal } = data
     if (isGlobal) data.product = ''
-    const expiryDateIso = convertedDateISO(espiryDate)
-    console.log({ ...data, espiryDate: expiryDateIso })
-    return
-    mutateUpdate({ ...data })
+    mutateUpdate(data)
   }
 
   useEffect(() => {

@@ -58,8 +58,17 @@ export const useDeleteCategorie = () => {
       }
     },
     async onSuccess(response) {
-      await queryClient.invalidateQueries({
-        queryKey: ['categories'],
+      // await queryClient.invalidateQueries({
+      //   queryKey: ['categories'],
+      // })
+
+      queryClient.setQueryData<Categories[]>(['categories'], (oldData) => {
+        if (!oldData) return []
+        return oldData.filter((category) => category.id !== response.id) // Actualizar cache con el ID retornado
+      })
+      queryClient.setQueryData<FindAllProducts[]>(['products'], (oldData) => {
+        if (!oldData) return []
+        return oldData.filter((product) => product.category.id !== response.id)
       })
       toast({
         title: `${response.message}`,

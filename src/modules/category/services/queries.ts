@@ -5,9 +5,9 @@ export const useGetAllCategorys = () =>
   useQuery({
     queryKey: ['categories'],
     queryFn: getAllCategories,
-    staleTime: 600000, // 10 minutos
+    staleTime: 1200000, // 20 minutos
     gcTime: 1200000, // 20 minutos
-    retry: 3,
-    retryDelay: 2000,
+    // retry: 3,
+    // retryDelay: 2000,
     placeholderData: keepPreviousData,
   })

@@ -16,13 +16,20 @@ export const useDeleteProduct = () => {
     mutationKey: ['delete-product'],
     mutationFn: deleteProduct,
     onSuccess: async (data) => {
+      const { id, message } = data
+
+      queryClient.setQueryData<FindAllProducts[]>(['products'], (oldData) =>
+        oldData ? oldData.filter((product) => product.id !== id) : []
+      )
+      queryClient.setQueryData<FindAllCoupons[]>(['coupons'], (oldData) =>
+        oldData ? oldData.filter((coupon) => coupon.products.id !== id) : []
+      )
       await queryClient.invalidateQueries({
         queryKey: ['products'],
-        exact: true,
       })
       toast({
         title: 'Product deleted',
-        description: data.message,
+        description: message,
         duration: 4000,
         className:
           'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',

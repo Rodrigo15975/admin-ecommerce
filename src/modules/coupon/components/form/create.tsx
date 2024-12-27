@@ -15,7 +15,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { convertedDateISO } from '@/utils/formatDateIso8601'
+import { DatePicker } from 'antd'
+import dayjs from 'dayjs'
 import { Code2Icon } from 'lucide-react'
 import { Button as ButtonPrime } from 'primereact/button'
 import {
@@ -23,8 +24,6 @@ import {
   InputNumberValueChangeEvent,
 } from 'primereact/inputnumber'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { DatePicker } from 'antd'
-import dayjs from 'dayjs'
 import { UseFormReturn } from 'react-hook-form'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { useCreateCoupon } from '../../services/mutation'
@@ -47,19 +46,16 @@ const Create = ({ form, handleDialogClose }: Props) => {
   const { id } = storeEditcoupon()
 
   const onSubmit = (data: CreateCoupon) => {
-    const { espiryDate, isGlobal } = data
-    const dateIso = convertedDateISO(espiryDate)
+    const { isGlobal } = data
+
     if (isGlobal) data.product = ''
 
-    mutateCreating(
-      { ...data, espiryDate: dateIso },
-      {
-        onSuccess: () => {
-          handleDialogClose()
-          form.reset()
-        },
-      }
-    )
+    mutateCreating(data, {
+      onSuccess: () => {
+        handleDialogClose()
+        form.reset()
+      },
+    })
   }
 
   const generateCode = () => {

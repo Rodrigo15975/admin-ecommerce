@@ -70,8 +70,6 @@ const Create = ({ handleDialogClose }: Props) => {
 
   const onSubmit = (data: CreateUser) => {
     if (dataUpdate.id) {
-      console.log('user updated:', data)
-
       return mutateUpdateUser(
         {
           ...data,

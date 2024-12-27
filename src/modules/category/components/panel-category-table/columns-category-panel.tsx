@@ -53,6 +53,9 @@ const ColumnsCategoryPanel = () => {
           >
             {discountRules?.length > 0 && (
               <Button
+                tooltipOptions={{
+                  position: 'top',
+                }}
                 tooltip="Edit Discount Category"
                 icon={<BookDown />}
                 className="p-2 shadow border bg-blue-600/80 text-white"

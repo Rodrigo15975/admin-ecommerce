@@ -3,6 +3,7 @@ interface HttpResponse {
   service: string
   statusCode: number
   timestamp: number
+  id: number
 }
 interface Cookies {
   auth: string
