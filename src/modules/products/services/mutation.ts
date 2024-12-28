@@ -15,8 +15,14 @@ export const useDeleteProduct = () => {
   return useMutation({
     mutationKey: ['delete-product'],
     mutationFn: deleteProduct,
-    onSuccess: async (data) => {
-      const { id, message } = data
+
+    async onMutate(id) {
+      await queryClient.cancelQueries({
+        queryKey: ['products'],
+      })
+      const previousProducts = queryClient.getQueryData<FindAllProducts[]>([
+        'products',
+      ])
 
       queryClient.setQueryData<FindAllProducts[]>(['products'], (oldData) =>
         oldData ? oldData.filter((product) => product.id !== id) : []
@@ -24,6 +30,20 @@ export const useDeleteProduct = () => {
       queryClient.setQueryData<FindAllCoupons[]>(['coupons'], (oldData) =>
         oldData ? oldData.filter((coupon) => coupon.products.id !== id) : []
       )
+
+      return {
+        previousProducts,
+      }
+    },
+    async onSettled() {
+      await queryClient.invalidateQueries({
+        queryKey: ['products'],
+      })
+    },
+
+    onSuccess: async (data) => {
+      const { message } = data
+
       await queryClient.invalidateQueries({
         queryKey: ['products'],
       })
@@ -35,7 +55,8 @@ export const useDeleteProduct = () => {
           'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-emerald-200 to-yellow-200',
       })
     },
-    onError(error: AxiosError) {
+    onError(error: AxiosError, _, context) {
+      queryClient.setQueryData(['products'], context?.previousProducts)
       const response = error.response?.data as { message: string }
       toast({
         title: response.message,

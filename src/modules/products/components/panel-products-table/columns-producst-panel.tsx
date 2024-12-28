@@ -56,6 +56,9 @@ const ColumnsProductsPanel = () => {
       field: 'product',
       header: 'Product',
       sortable: true,
+      bodyStyle: {
+        fontWeight: 'bold',
+      },
     },
     {
       field: 'category.category',
@@ -77,6 +80,7 @@ const ColumnsProductsPanel = () => {
       field: 'discount',
       header: 'Discount',
       sortable: true,
+      body: (data: FindAllProducts) => <>{data.discount}.00%</>,
     },
     {
       header: 'Variants',
@@ -86,6 +90,13 @@ const ColumnsProductsPanel = () => {
       field: 'price',
       header: 'Price',
       sortable: true,
+      body: (data: FindAllProducts) => (
+        <>
+          <div className="flex items-center justify-center">
+            <span className="font-bold text-lg">${data.price}.00</span>
+          </div>
+        </>
+      ),
     },
     {
       field: 'size',

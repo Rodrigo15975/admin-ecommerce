@@ -1,3 +1,4 @@
+import qs from 'qs'
 
 // Función para convertir el formulario a FormData
 const convertToFormData = (data: InitialValuesProduct): FormData => {
@@ -62,4 +63,17 @@ const convertToFormData = (data: InitialValuesProduct): FormData => {
   return formData
 }
 
+export const convertFormDataToOriginal = <T>(formData: FormData): T => {
+  // Convertimos FormData a un objeto simple
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const formDataObject: Record<string, any> = {}
+  formData.forEach((value, key) => {
+    formDataObject[key] = value
+  })
+
+  // Usamos qs para analizar la estructura anidada
+  const parsedData = qs.parse(formDataObject, { depth: Infinity })
+
+  return parsedData as T
+}
 export default convertToFormData

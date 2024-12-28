@@ -43,8 +43,8 @@ interface FindAllProducts
   category: {
     id: number
     category: string
-    createdAt: string
-    updatedAt: string
+    createdAt?: string
+    updatedAt?: string
   }
 }
 
