@@ -15,15 +15,14 @@ export async function middleware(req: NextRequest) {
   }
 
   const tokenVerify = await verifyToken(token?.value)
-  // Si el token es inválido, redirige al inicio
+
   if (!tokenVerify.success && config.matcher.includes(pathname))
     return NextResponse.redirect(new URL('/', req.url))
 
-  // Si el token es válido, redirigir al dashboard
   if (tokenVerify.success && pathname === '/')
     return NextResponse.redirect(new URL(config.matcher[0], req.url))
 
-  return NextResponse.next() // Si todo está bien, continúa con la solicitud
+  return NextResponse.next()
 }
 
 export const config = {
