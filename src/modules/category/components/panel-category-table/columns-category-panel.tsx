@@ -1,12 +1,13 @@
 import ButtonActions from '@/components/buttonActions/ButtonActions'
+import { convertedDayRest } from '@/utils/formatDateIso8601'
 import { storeOpenDialogForm } from '@/utils/storeOpenDialogForm'
+import { BookDown } from 'lucide-react'
+import { Button } from 'primereact/button'
 import { ColumnProps } from 'primereact/column'
 import { confirmPopup } from 'primereact/confirmpopup'
+import { Tag } from 'primereact/tag'
 import { useDeleteCategorie } from '../../services/mutation'
 import { storeCreateDiscountCategorie, storeEditCategorie } from '../../store'
-import { Button } from 'primereact/button'
-import { BookDown } from 'lucide-react'
-import { convertedDayRest } from '@/utils/formatDateIso8601'
 
 const ColumnsCategoryPanel = () => {
   const { setId } = storeEditCategorie()
@@ -124,7 +125,9 @@ const ColumnsCategoryPanel = () => {
       const dayRest = convertedDayRest(end_date)
       return (
         <div className="flex gap-2 items-center justify-center">
-          <span>{dayRest}</span>
+          <Tag color="secondary">
+            <span>{dayRest}</span>
+          </Tag>
         </div>
       )
     }

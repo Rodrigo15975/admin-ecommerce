@@ -54,7 +54,7 @@ const ColumnsCouponPanel = () => {
             {data.products ? (
               <span className="font-bold">{data.products.product}</span>
             ) : (
-              'There is no product'
+              <Tag severity={'info'}>There is no product</Tag>
             )}
           </div>
         </>
