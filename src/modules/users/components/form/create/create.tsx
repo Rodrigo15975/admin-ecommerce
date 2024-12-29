@@ -44,7 +44,10 @@ import {
 } from '@/modules/users/services'
 import { storeUpdateUser } from '@/modules/users/store/storeUpdateUser'
 import { formInputUser } from '@/modules/users/utils/formInputsUser'
-import { formSchemaUser } from '@/modules/users/utils/formSchemaUser'
+import {
+  formSchemaUser,
+  formSchemaUserUpdate,
+} from '@/modules/users/utils/formSchemaUser'
 import { useEffect } from 'react'
 import { defaultValuesCreateUser } from './initialValue'
 
@@ -64,31 +67,34 @@ const Create = ({ handleDialogClose }: Props) => {
     useUpdateUser()
 
   const form = useForm<CreateUser>({
-    resolver: zodResolver(formSchemaUser),
+    resolver: zodResolver(
+      dataUpdate.id ? formSchemaUserUpdate : formSchemaUser
+    ),
     defaultValues: defaultValuesCreateUser,
   })
 
-  const onSubmit = (data: CreateUser) => {
-    if (dataUpdate.id) {
-      return mutateUpdateUser(
-        {
-          ...data,
-          id: dataUpdate.id,
-          role: { role: data.role },
-          auditoria: {
-            id: user?.id,
-            role: user?.role.role,
-          },
+  const updateUser = (data: CreateUser) =>
+    mutateUpdateUser(
+      {
+        ...data,
+        id: dataUpdate.id,
+        role: { role: data.role },
+        auditoria: {
+          id: user?.id,
+          role: user?.role.role,
         },
-        {
-          onSuccess() {
-            form.reset()
-            form.setValue('role', 'EMPLOYEE')
-            handleDialogClose()
-          },
-        }
-      )
-    }
+      },
+      {
+        onSuccess() {
+          form.reset()
+          form.setValue('role', 'EMPLOYEE')
+          handleDialogClose()
+        },
+      }
+    )
+
+  const onSubmit = (data: CreateUser) => {
+    if (dataUpdate.id) return updateUser(data)
     mutateCreateUser(
       {
         ...data,
