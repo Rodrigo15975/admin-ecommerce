@@ -36,14 +36,7 @@ export default function RootLayout({
           showAtBottom={false}
         />
         <QueryProvides>
-          <PrimeReactProvider
-            value={
-              {
-                // pt: Tailwind,
-                // unstyled: true,
-              }
-            }
-          >
+          <PrimeReactProvider value={{}}>
             <AnimatePresence>
               <CookieProviderClient>
                 <LazyMotion features={domAnimation}>
