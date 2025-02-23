@@ -1,4 +1,3 @@
-// import { Label } from '@/components/ui/label'
 import {
   Form,
   FormControl,
@@ -12,7 +11,6 @@ import { Edit2 } from 'lucide-react'
 import { Button } from 'primereact/button'
 import { useForm } from 'react-hook-form'
 import { useOneFindCoupon } from '../../hooks/useFindCoupon'
-// import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useGetAllProducts } from '@/modules/create-products/services/queries'
 import {
@@ -50,9 +48,6 @@ const FormUpdateCoupon = (data: FindAllCoupons) => {
   const onSubmit = (data: UpdateCoupon) => {
     const { isGlobal } = data
     if (isGlobal) data.product = null
-    console.log(data)
-    // return
-    // const formattedDate = dayjs(data.espiryDate).format('YYYY-MM-DD')
     mutateUpdate(data, {
       onSuccess: () => {
         onClose()

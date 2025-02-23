@@ -29,6 +29,3 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-
-      - name: test
-        run: echo "Tests passed successfully"

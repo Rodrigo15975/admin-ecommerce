@@ -11,7 +11,9 @@ export const createUser = async (data: CreateUser) =>
   await useMethods.POST<HttpResponse, CreateUser>(`${PathServices.USER}`, data)
 
 export const getProfileUser = async () =>
-  await useMethods.GET<User>(`${PathServices.USER}${PathServices.PROFILE}`)
+  await useMethods.GET<User>(`${PathServices.USER}${PathServices.PROFILE}`, {
+    withCredentials: true,
+  })
 
 export const deleteUser = async (id: number) =>
   await useMethods.DELETE<HttpResponse>(`${PathServices.USER}/${id}`)
